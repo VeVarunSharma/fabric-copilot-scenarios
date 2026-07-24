@@ -1,0 +1,288 @@
+table 'Health Observation'
+	description: One aggregate Statistics Canada cell per period, geography, age group, sex, indicator, characteristic, and quality status. This table contains no respondent-level records.
+
+	column 'Period Key'
+		dataType: int64
+		sourceColumn: period_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Geography Key'
+		dataType: int64
+		sourceColumn: geography_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Age Group Key'
+		dataType: int64
+		sourceColumn: age_group_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Sex Key'
+		dataType: int64
+		sourceColumn: sex_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Indicator Key'
+		dataType: int64
+		sourceColumn: indicator_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Characteristic Key'
+		dataType: int64
+		sourceColumn: characteristic_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Quality Status Key'
+		dataType: int64
+		sourceColumn: quality_status_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column Estimate
+		dataType: double
+		sourceColumn: value
+		summarizeBy: none
+		description: Published aggregate value. Blank means suppressed, too unreliable, or unavailable and must never be interpreted as zero.
+		isHidden
+
+	measure 'Health Estimate' =
+			VAR ObservationCount = COUNTROWS('Health Observation')
+			VAR PublishedValue = MAX('Health Observation'[Estimate])
+			RETURN
+				IF(ObservationCount = 1, PublishedValue)
+		formatString: #,0.0;-#,0.0;0.0
+		displayFolder: Estimates
+		description: Returns one published value only when the filter context resolves to a single aggregate observation; otherwise returns blank to prevent accidental aggregation across incompatible cells.
+
+	measure 'Percent Estimate' =
+			CALCULATE(
+				[Health Estimate],
+				REMOVEFILTERS('Characteristic'),
+				'Characteristic'[Characteristic Name] = "Percent Estimate"
+			)
+		formatString: 0.0\%;-0.0\%;0.0\%
+		displayFolder: Estimates
+		description: Returns the published percentage estimate for a single aggregate cell. The underlying source stores percentage points, and the report displays the percent sign without rescaling.
+
+	measure 'Population Estimate' =
+			CALCULATE(
+				[Health Estimate],
+				REMOVEFILTERS('Characteristic'),
+				'Characteristic'[Characteristic Name] = "Population Estimate"
+			)
+		formatString: #,0;-#,0;0
+		displayFolder: Estimates
+		description: Returns the published population-count estimate for a single aggregate cell.
+
+	measure 'British Columbia Estimate' =
+			CALCULATE(
+				[Health Estimate],
+				REMOVEFILTERS('Geography'),
+				'Geography'[Is British Columbia] = TRUE()
+			)
+		formatString: #,0.0;-#,0.0;0.0
+		displayFolder: Comparisons
+		description: Returns the British Columbia value for the currently selected characteristic and compatible demographic context.
+
+	measure 'Canada Estimate' =
+			CALCULATE(
+				[Health Estimate],
+				REMOVEFILTERS('Geography'),
+				'Geography'[Is Canada Comparator] = TRUE()
+			)
+		formatString: #,0.0;-#,0.0;0.0
+		displayFolder: Comparisons
+		description: Returns the Canada (excluding territories) comparison value, not an all-Canada total.
+
+	measure 'BC vs Canada Difference' =
+			VAR BritishColumbiaValue = [British Columbia Estimate]
+			VAR CanadaComparatorValue = [Canada Estimate]
+			RETURN
+				IF(
+					NOT ISBLANK(BritishColumbiaValue) && NOT ISBLANK(CanadaComparatorValue),
+					BritishColumbiaValue - CanadaComparatorValue
+				)
+		formatString: +#,0.0;-#,0.0;0.0
+		displayFolder: Comparisons
+		description: Subtracts the Canada (excluding territories) estimate from the British Columbia estimate in the current characteristic unit.
+
+	measure 'Latest Reference Year' =
+			MAX('Period'[Reference Year])
+		formatString: 0
+		displayFolder: Context
+		description: Latest reference year in the current filter context. The archived public table ends in 2022.
+
+	measure 'British Columbia Province Rank' =
+			VAR BritishColumbiaValue = [British Columbia Estimate]
+			RETURN
+				IF(
+					NOT ISBLANK(BritishColumbiaValue),
+					RANKX(
+						FILTER(
+							ALL('Geography'),
+							'Geography'[Geography Type] = "Province"
+						),
+						CALCULATE([Health Estimate]),
+						BritishColumbiaValue,
+						DESC,
+						DENSE
+					)
+				)
+		formatString: 0
+		displayFolder: Comparisons
+		description: Ranks British Columbia from highest to lowest published estimate among provinces for one compatible aggregate cell. It is descriptive and does not imply better or worse health.
+
+	measure 'Valid Province Count' =
+			COUNTROWS(
+				FILTER(
+					ALL('Geography'),
+					'Geography'[Geography Type] = "Province"
+						&& NOT ISBLANK(CALCULATE([Health Estimate]))
+				)
+			)
+		formatString: 0
+		displayFolder: Comparisons
+		description: Counts provinces with a nonblank published value in the current compatible filter context.
+
+	measure 'Use With Caution Count' =
+			CALCULATE(
+				COUNTROWS('Health Observation'),
+				'Quality Status'[Is Caution] = TRUE()
+			)
+		formatString: #,0
+		displayFolder: Data Quality
+		description: Counts aggregate observations marked E by Statistics Canada. These values remain available but must be identified as use with caution.
+
+	measure 'Suppressed Observation Count' =
+			CALCULATE(
+				COUNTROWS('Health Observation'),
+				'Quality Status'[Is Suppressed] = TRUE()
+			)
+		formatString: #,0
+		displayFolder: Data Quality
+		description: Counts F and x aggregate observations. Their estimate values remain blank and are never zero-filled.
+
+	measure 'Observation Count' = COUNTROWS('Health Observation')
+		formatString: #,0
+		displayFolder: Data Quality
+		description: Counts aggregate fact rows in the current filter context, including publishable, caution, suppressed, and unavailable observations.
+
+	measure 'Estimate Status Label' =
+			VAR ObservationCount = COUNTROWS('Health Observation')
+			VAR StatusLabel = SELECTEDVALUE('Quality Status'[Status Label])
+			RETURN
+				SWITCH(
+					TRUE(),
+					ObservationCount = 0, "No observation",
+					ObservationCount > 1, "Multiple observations",
+					ISBLANK(StatusLabel), "Unknown status",
+					StatusLabel
+				)
+		displayFolder: Data Quality
+		description: Returns the plain-language Statistics Canada quality label for one aggregate observation and flags ambiguous multi-cell contexts.
+
+	measure 'HTML Spotlight Card' =
+			VAR IndicatorLabel = SELECTEDVALUE('Indicator'[Indicator Name], "Select one indicator")
+			VAR ReferenceYear = [Latest Reference Year]
+			VAR BritishColumbiaValue =
+				CALCULATE(
+					[Percent Estimate],
+					REMOVEFILTERS('Geography'),
+					'Geography'[Is British Columbia] = TRUE()
+				)
+			VAR CanadaComparatorValue =
+				CALCULATE(
+					[Percent Estimate],
+					REMOVEFILTERS('Geography'),
+					'Geography'[Is Canada Comparator] = TRUE()
+				)
+			VAR BritishColumbiaStatus =
+				CALCULATE(
+					[Estimate Status Label],
+					REMOVEFILTERS('Geography'),
+					'Geography'[Is British Columbia] = TRUE(),
+					REMOVEFILTERS('Characteristic'),
+					'Characteristic'[Characteristic Name] = "Percent Estimate"
+				)
+			VAR Difference = BritishColumbiaValue - CanadaComparatorValue
+			VAR BritishColumbiaText =
+				IF(
+					ISBLANK(BritishColumbiaValue),
+					"Not available",
+					FORMAT(BritishColumbiaValue, "0.0") & "%"
+				)
+			VAR ComparisonText =
+				IF(
+					ISBLANK(BritishColumbiaValue) || ISBLANK(CanadaComparatorValue),
+					"Comparator unavailable",
+					FORMAT(ABS(Difference), "0.0")
+						& " percentage points "
+						& IF(Difference >= 0, "above", "below")
+						& " Canada (excluding territories)"
+				)
+			VAR StatusColour =
+				IF(BritishColumbiaStatus = "Use with caution", "#8A5A00", "#1B5E5F")
+			RETURN
+				"<div role=""group"" aria-label=""Historical CCHS spotlight"" style=""box-sizing:border-box;width:100%;height:100%;padding:18px 20px;border:1px solid #C7D8D8;border-left:8px solid "
+					& StatusColour
+					& ";border-radius:12px;background:#F7FBFB;font-family:Segoe UI,Arial,sans-serif;color:#172B35;"">"
+					& "<div style=""font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#45636B;"">Historical CCHS &middot; "
+					& FORMAT(ReferenceYear, "0")
+					& "</div>"
+					& "<div style=""margin-top:6px;font-size:18px;font-weight:650;"">"
+					& IndicatorLabel
+					& "</div>"
+					& "<div style=""margin-top:8px;font-size:34px;font-weight:750;line-height:1;"">"
+					& BritishColumbiaText
+					& "</div>"
+					& "<div style=""margin-top:7px;font-size:13px;color:#34515A;"">"
+					& ComparisonText
+					& "</div>"
+					& "<div style=""margin-top:12px;font-size:12px;font-weight:600;color:"
+					& StatusColour
+					& ";"">"
+					& BritishColumbiaStatus
+					& "</div>"
+					& "<div style=""margin-top:5px;font-size:11px;color:#5D747B;"">Aggregated public estimates; 2022 redesign limits comparison with earlier years.</div>"
+					& "</div>"
+		displayFolder: Presentation
+		description: Sanitized inline HTML for the optional HTML Content lite visual. Contains no scripts, iframes, external resources, or respondent-level content; pair it with the native fallback card.
+
+	partition 'Health Observation' = m
+		mode: import
+		source =
+				let
+					DataRoot = Text.TrimEnd(#"CCHS Data Root", {"/", "\"}),
+					Source = Csv.Document(
+						File.Contents(DataRoot & "/observations.csv"),
+						[Delimiter = ",", Columns = 8, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+					),
+					Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(
+						Headers,
+						{
+							{"period_key", Int64.Type},
+							{"geography_key", Int64.Type},
+							{"age_group_key", Int64.Type},
+							{"sex_key", Int64.Type},
+							{"indicator_key", Int64.Type},
+							{"characteristic_key", Int64.Type},
+							{"quality_status_key", Int64.Type},
+							{"value", type number}
+						},
+						"en-CA"
+					)
+				in
+					Typed

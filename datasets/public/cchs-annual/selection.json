@@ -1,0 +1,203 @@
+{
+  "contractVersion": "1.0",
+  "source": {
+    "productId": "13-10-0096-01",
+    "downloadRoot": "13100096",
+    "title": "Health characteristics, annual estimates, inactive",
+    "downloadUrl": "https://www150.statcan.gc.ca/n1/tbl/csv/13100096-eng.zip",
+    "productUrl": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1310009601",
+    "licenceUrl": "https://www.statcan.gc.ca/en/terms-conditions/open-licence"
+  },
+  "referenceYears": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022
+  ],
+  "geographies": [
+    {
+      "sourceName": "Canada (excluding territories)",
+      "code": "CANX",
+      "type": "National comparator",
+      "sortOrder": 1
+    },
+    {
+      "sourceName": "Newfoundland and Labrador",
+      "code": "NL",
+      "type": "Province",
+      "sortOrder": 2
+    },
+    {
+      "sourceName": "Prince Edward Island",
+      "code": "PE",
+      "type": "Province",
+      "sortOrder": 3
+    },
+    {
+      "sourceName": "Nova Scotia",
+      "code": "NS",
+      "type": "Province",
+      "sortOrder": 4
+    },
+    {
+      "sourceName": "New Brunswick",
+      "code": "NB",
+      "type": "Province",
+      "sortOrder": 5
+    },
+    {
+      "sourceName": "Quebec",
+      "code": "QC",
+      "type": "Province",
+      "sortOrder": 6
+    },
+    {
+      "sourceName": "Ontario",
+      "code": "ON",
+      "type": "Province",
+      "sortOrder": 7
+    },
+    {
+      "sourceName": "Manitoba",
+      "code": "MB",
+      "type": "Province",
+      "sortOrder": 8
+    },
+    {
+      "sourceName": "Saskatchewan",
+      "code": "SK",
+      "type": "Province",
+      "sortOrder": 9
+    },
+    {
+      "sourceName": "Alberta",
+      "code": "AB",
+      "type": "Province",
+      "sortOrder": 10
+    },
+    {
+      "sourceName": "British Columbia",
+      "code": "BC",
+      "type": "Province",
+      "sortOrder": 11
+    }
+  ],
+  "indicators": [
+    {
+      "sourceName": "Perceived health, very good or excellent",
+      "name": "Perceived Health",
+      "topic": "Health status",
+      "ageScope": "12 years and over",
+      "sortOrder": 1
+    },
+    {
+      "sourceName": "Perceived mental health, very good or excellent",
+      "name": "Perceived Mental Health",
+      "topic": "Mental health and well-being",
+      "ageScope": "12 years and over",
+      "sortOrder": 2
+    },
+    {
+      "sourceName": "Perceived life stress, most days quite a bit or extremely stressful",
+      "name": "High Life Stress",
+      "topic": "Mental health and well-being",
+      "ageScope": "12 years and over",
+      "sortOrder": 3
+    },
+    {
+      "sourceName": "Life satisfaction, satisfied or very satisfied",
+      "name": "Life Satisfaction",
+      "topic": "Mental health and well-being",
+      "ageScope": "12 years and over",
+      "sortOrder": 4
+    },
+    {
+      "sourceName": "Current smoker, daily or occasional",
+      "name": "Current Smoking",
+      "topic": "Lifestyle",
+      "ageScope": "12 years and over",
+      "sortOrder": 5
+    },
+    {
+      "sourceName": "Heavy drinking",
+      "name": "Heavy Drinking",
+      "topic": "Lifestyle",
+      "ageScope": "12 years and over",
+      "sortOrder": 6
+    },
+    {
+      "sourceName": "Self-reported physical activity, 150 minutes per week, adult (18 years and over)",
+      "name": "Adult Physical Activity",
+      "topic": "Lifestyle",
+      "ageScope": "18 years and over",
+      "sortOrder": 7
+    },
+    {
+      "sourceName": "Has a regular healthcare provider",
+      "name": "Regular Healthcare Provider",
+      "topic": "Healthcare access",
+      "ageScope": "12 years and over",
+      "sortOrder": 8
+    }
+  ],
+  "characteristics": [
+    {
+      "sourceName": "Number of persons",
+      "name": "Population Estimate",
+      "measureFamily": "Population",
+      "statisticType": "Estimate",
+      "unit": "Persons",
+      "decimals": 0,
+      "sortOrder": 1
+    },
+    {
+      "sourceName": "Low 95% confidence interval, number of persons",
+      "name": "Population Lower 95% CI",
+      "measureFamily": "Population",
+      "statisticType": "Lower 95% CI",
+      "unit": "Persons",
+      "decimals": 0,
+      "sortOrder": 2
+    },
+    {
+      "sourceName": "High 95% confidence interval, number of persons",
+      "name": "Population Upper 95% CI",
+      "measureFamily": "Population",
+      "statisticType": "Upper 95% CI",
+      "unit": "Persons",
+      "decimals": 0,
+      "sortOrder": 3
+    },
+    {
+      "sourceName": "Percent",
+      "name": "Percent Estimate",
+      "measureFamily": "Percent",
+      "statisticType": "Estimate",
+      "unit": "Percent",
+      "decimals": 1,
+      "sortOrder": 4
+    },
+    {
+      "sourceName": "Low 95% confidence interval, percent",
+      "name": "Percent Lower 95% CI",
+      "measureFamily": "Percent",
+      "statisticType": "Lower 95% CI",
+      "unit": "Percent",
+      "decimals": 1,
+      "sortOrder": 5
+    },
+    {
+      "sourceName": "High 95% confidence interval, percent",
+      "name": "Percent Upper 95% CI",
+      "measureFamily": "Percent",
+      "statisticType": "Upper 95% CI",
+      "unit": "Percent",
+      "decimals": 1,
+      "sortOrder": 6
+    }
+  ]
+}

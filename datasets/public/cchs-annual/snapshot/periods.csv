@@ -1,0 +1,9 @@
+period_key,reference_year,period_start_date,survey_era,comparability_note,is_latest
+2015,2015,2015-01-01,2015 redesign,Part of the 2015-designed CCHS series.,false
+2016,2016,2016-01-01,2015 redesign,Part of the 2015-designed CCHS series.,false
+2017,2017,2017-01-01,2015 redesign,Part of the 2015-designed CCHS series.,false
+2018,2018,2018-01-01,2015 redesign,Part of the 2015-designed CCHS series.,false
+2019,2019,2019-01-01,2015 redesign,Part of the 2015-designed CCHS series.,false
+2020,2020,2020-01-01,2015 redesign,Part of the 2015-designed CCHS series.,false
+2021,2021,2021-01-01,2015 redesign,Part of the 2015-designed CCHS series.,false
+2022,2022,2022-01-01,2022 redesign,The 2022 CCHS redesign limits comparison with earlier periods.,true

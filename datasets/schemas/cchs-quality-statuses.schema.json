@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CCHS quality status row schema",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "quality_status_key",
+    "source_status",
+    "status_label",
+    "status_description",
+    "is_usable",
+    "is_caution",
+    "is_suppressed",
+    "sort_order"
+  ],
+  "required": [
+    "quality_status_key",
+    "source_status",
+    "status_label",
+    "status_description",
+    "is_usable",
+    "is_caution",
+    "is_suppressed",
+    "sort_order"
+  ],
+  "properties": {
+    "quality_status_key": { "type": "integer", "minimum": 1 },
+    "source_status": { "type": "string" },
+    "status_label": { "type": "string" },
+    "status_description": { "type": "string" },
+    "is_usable": { "type": "boolean" },
+    "is_caution": { "type": "boolean" },
+    "is_suppressed": { "type": "boolean" },
+    "sort_order": { "type": "integer", "minimum": 1 }
+  }
+}

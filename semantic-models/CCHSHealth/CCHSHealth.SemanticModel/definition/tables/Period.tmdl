@@ -1,0 +1,66 @@
+table Period
+	description: Reference years and survey eras for the historical 2015 to 2022 CCHS snapshot. The 2022 member identifies the survey redesign and comparability break.
+
+	column 'Period Key'
+		dataType: int64
+		sourceColumn: period_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Reference Year'
+		dataType: int64
+		sourceColumn: reference_year
+		formatString: 0
+		summarizeBy: none
+		description: Calendar year attached to the published Statistics Canada estimate.
+
+	column 'Period Start Date'
+		dataType: dateTime
+		sourceColumn: period_start_date
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		description: January 1 date used to support chronological report axes.
+
+	column 'Survey Era'
+		dataType: string
+		sourceColumn: survey_era
+		summarizeBy: none
+		description: Survey design era. The 2022 redesign limits comparison with earlier years.
+
+	column 'Comparability Note'
+		dataType: string
+		sourceColumn: comparability_note
+		summarizeBy: none
+		description: Required interpretation note for the reference year.
+
+	column 'Is Latest'
+		dataType: boolean
+		sourceColumn: is_latest
+		summarizeBy: none
+		description: True only for 2022, the latest year in this archived public table.
+
+	partition Period = m
+		mode: import
+		source =
+				let
+					DataRoot = Text.TrimEnd(#"CCHS Data Root", {"/", "\"}),
+					Source = Csv.Document(
+						File.Contents(DataRoot & "/periods.csv"),
+						[Delimiter = ",", Columns = 6, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+					),
+					Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(
+						Headers,
+						{
+							{"period_key", Int64.Type},
+							{"reference_year", Int64.Type},
+							{"period_start_date", type date},
+							{"survey_era", type text},
+							{"comparability_note", type text},
+							{"is_latest", type logical}
+						},
+						"en-CA"
+					)
+				in
+					Typed

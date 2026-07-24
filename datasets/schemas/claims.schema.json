@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Healthcare claims row schema",
+  "description": "Row shape for datasets/synthetic/healthcare-claims/claims.csv.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "claim_id",
+    "member_id",
+    "claim_received_date",
+    "service_date",
+    "provider_code",
+    "procedure_code",
+    "place_of_service",
+    "claim_amount",
+    "allowed_amount",
+    "claim_status",
+    "synthetic_record",
+    "anomaly_label"
+  ],
+  "required": [
+    "claim_id",
+    "member_id",
+    "claim_received_date",
+    "service_date",
+    "provider_code",
+    "procedure_code",
+    "place_of_service",
+    "claim_amount",
+    "allowed_amount",
+    "claim_status",
+    "synthetic_record",
+    "anomaly_label"
+  ],
+  "properties": {
+    "claim_id": {
+      "type": "string"
+    },
+    "member_id": {
+      "type": "string",
+      "description": "Synthetic member token."
+    },
+    "claim_received_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "service_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "provider_code": {
+      "type": "string",
+      "description": "Synthetic provider code. Blank only for injected anomaly."
+    },
+    "procedure_code": {
+      "type": "string"
+    },
+    "place_of_service": {
+      "type": "string"
+    },
+    "claim_amount": {
+      "type": "number"
+    },
+    "allowed_amount": {
+      "type": "number"
+    },
+    "claim_status": {
+      "type": "string"
+    },
+    "synthetic_record": {
+      "type": "string",
+      "const": "SYNTHETIC"
+    },
+    "anomaly_label": {
+      "type": "string"
+    }
+  }
+}

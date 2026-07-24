@@ -1,0 +1,60 @@
+// Scenario 06 measure starter pack aligned to the finalized RetailSales semantic model.
+// Format-string and description expectations are documented in expected-output.md.
+
+// Curated revenue from completed retail purchase lines.
+// Format string: $#,##0.00;($#,##0.00)
+Total Revenue =
+    SUM ( Sales[Revenue Amount] )
+
+// Curated cost from completed retail purchase lines.
+// Format string: $#,##0.00;($#,##0.00)
+Total Cost =
+    SUM ( Sales[Cost Amount] )
+
+// Revenue minus cost.
+// Format string: $#,##0.00;($#,##0.00)
+Gross Margin =
+    [Total Revenue] - [Total Cost]
+
+// Gross margin divided by total revenue.
+// Format string: 0.00%
+Gross Margin % =
+    DIVIDE ( [Gross Margin], [Total Revenue] )
+
+// Distinct count of retail purchase orders.
+// Format string: #,##0
+Order Count =
+    DISTINCTCOUNT ( Sales[Order ID] )
+
+// Revenue divided by order count.
+// Format string: $#,##0.00;($#,##0.00)
+Average Order Value =
+    DIVIDE ( [Total Revenue], [Order Count] )
+
+// Year-to-date revenue using the Date table.
+// Format string: $#,##0.00;($#,##0.00)
+Revenue YTD =
+    TOTALYTD ( [Total Revenue], Date[Date] )
+
+// Revenue for the same period in the previous year.
+// Format string: $#,##0.00;($#,##0.00)
+Revenue Previous Year =
+    CALCULATE ( [Total Revenue], SAMEPERIODLASTYEAR ( Date[Date] ) )
+
+// Percentage growth versus prior-year revenue.
+// Format string: 0.00%
+Revenue YoY % =
+    VAR _currentRevenue = [Total Revenue]
+    VAR _previousRevenue = [Revenue Previous Year]
+    RETURN
+        DIVIDE ( _currentRevenue - _previousRevenue, _previousRevenue )
+
+// Revenue across the latest visible 90-day window.
+// Format string: $#,##0.00;($#,##0.00)
+Revenue Rolling 90 Days =
+    VAR _maxVisibleDate = MAX ( Date[Date] )
+    RETURN
+        CALCULATE (
+            [Total Revenue],
+            DATESINPERIOD ( Date[Date], _maxVisibleDate, -90, DAY )
+        )

@@ -1,0 +1,19 @@
+model Model
+	culture: en-US
+	sourceQueryCulture: en-US
+
+expression DL_Lakehouse =
+	let
+		WorkspaceId = "${WORKSPACE_ID}",
+		LakehouseId = "${GOLD_LAKEHOUSE_ID}",
+		Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/" & WorkspaceId & "/" & LakehouseId, [HierarchicalNavigation=true])
+	in
+		Source
+
+ref table Date
+ref table Customer
+ref table Product
+ref table Sales
+ref relationship 'Sales to Date'
+ref relationship 'Sales to Customer'
+ref relationship 'Sales to Product'

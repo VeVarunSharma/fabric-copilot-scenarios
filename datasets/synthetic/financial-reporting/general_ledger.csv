@@ -1,0 +1,13 @@
+entry_id,posting_date,account_id,cost_center,journal_source,debit_amount,credit_amount,description,synthetic_record,anomaly_label
+GL-8000,2026-05-01,ACCT-1000,CC-10,cash_receipt,195.46,0.00,monthly settlement,SYNTHETIC,none
+GL-8001,2026-05-02,ACCT-1100,CC-11,invoice,218.23,0.00,channel billing,SYNTHETIC,none
+GL-8002,2026-05-03,ACCT-4000,CC-12,revenue,0.00,266.29,product sale,SYNTHETIC,none
+GL-8003,2026-05-04,ACCT-5000,CC-13,cogs,294.49,0.00,inventory release,SYNTHETIC,none
+GL-8004,2026-05-05,ACCT-6100,CC-10,expense,335.25,0.00,operations spend,SYNTHETIC,none
+GL-8005,2026-05-06,ACCT-2100,CC-11,ap,0.00,365.02,supplier accrual,SYNTHETIC,none
+GL-8006,2026-05-07,ACCT-1000,CC-12,cash_receipt,404.52,0.00,monthly settlement,SYNTHETIC,none
+GL-8007,2026-05-08,ACCT-1100,CC-13,invoice,433.34,0.00,channel billing,SYNTHETIC,none
+GL-8008,2026-05-09,ACCT-4000,CC-10,revenue,0.00,464.94,product sale,SYNTHETIC,none
+GL-8009,2026-05-10,ACCT-5000,CC-11,cogs,504.44,0.00,inventory release,SYNTHETIC,none
+GL-8010,2026-05-11,ACCT-6100,CC-12,expense,542.90,0.00,operations spend,SYNTHETIC,none
+GL-8999,2026-05-19,ACCT-9999,CC-99,manual_adjustment,250.00,0.00,unmapped workshop adjustment,SYNTHETIC,orphan_account

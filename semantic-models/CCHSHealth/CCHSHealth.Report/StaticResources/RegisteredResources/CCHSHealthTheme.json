@@ -1,0 +1,73 @@
+{
+  "name": "CCHS Historical Public Health",
+  "dataColors": [
+    "#0B5C6B",
+    "#2B7A78",
+    "#3A6EA5",
+    "#D97706",
+    "#7A5195",
+    "#6B7280",
+    "#B45309",
+    "#0F766E"
+  ],
+  "background": "#F5F8FA",
+  "foreground": "#172B35",
+  "tableAccent": "#0B5C6B",
+  "good": "#1B7F5A",
+  "neutral": "#D97706",
+  "bad": "#B42318",
+  "maximum": "#0B5C6B",
+  "center": "#D9E6EA",
+  "minimum": "#F6D7C3",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "title": [
+          {
+            "show": true,
+            "fontFamily": "Segoe UI Semibold",
+            "fontSize": 12,
+            "fontColor": {
+              "solid": {
+                "color": "#172B35"
+              }
+            },
+            "background": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "alignment": "left"
+          }
+        ],
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#D6E0E5"
+              }
+            },
+            "radius": 6
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": true
+          }
+        ]
+      }
+    }
+  }
+}

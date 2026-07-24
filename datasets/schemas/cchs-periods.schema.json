@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CCHS period row schema",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "period_key",
+    "reference_year",
+    "period_start_date",
+    "survey_era",
+    "comparability_note",
+    "is_latest"
+  ],
+  "required": [
+    "period_key",
+    "reference_year",
+    "period_start_date",
+    "survey_era",
+    "comparability_note",
+    "is_latest"
+  ],
+  "properties": {
+    "period_key": { "type": "integer" },
+    "reference_year": { "type": "integer" },
+    "period_start_date": { "type": "string", "format": "date" },
+    "survey_era": { "type": "string" },
+    "comparability_note": { "type": "string" },
+    "is_latest": { "type": "boolean" }
+  }
+}

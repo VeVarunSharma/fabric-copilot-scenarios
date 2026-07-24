@@ -1,0 +1,7 @@
+account_id,account_name,account_type,reporting_line,normal_balance,synthetic_record
+ACCT-1000,Cash Clearing,asset,balance_sheet,debit,SYNTHETIC
+ACCT-1100,Trade Receivables,asset,balance_sheet,debit,SYNTHETIC
+ACCT-2100,Accounts Payable,liability,balance_sheet,credit,SYNTHETIC
+ACCT-4000,Product Revenue,revenue,income_statement,credit,SYNTHETIC
+ACCT-5000,Cost of Sales,expense,income_statement,debit,SYNTHETIC
+ACCT-6100,Operating Expense,expense,income_statement,debit,SYNTHETIC

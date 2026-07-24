@@ -1,0 +1,92 @@
+{
+  "properties": {
+    "description": "Fabric healthcare-claims orchestration for quality validation and gold summary publishing.",
+    "annotations": [
+      "healthcare-claims",
+      "quality",
+      "fabric-sample"
+    ],
+    "parameters": {
+      "environment": {
+        "type": "String",
+        "defaultValue": "${ENVIRONMENT}"
+      },
+      "processing_date": {
+        "type": "String",
+        "defaultValue": "@formatDateTime(addDays(utcNow(), -1), 'yyyy-MM-dd')"
+      },
+      "pipeline_run_id": {
+        "type": "String",
+        "defaultValue": "@pipeline().RunId"
+      }
+    },
+    "variables": {
+      "pipeline_status": {
+        "type": "String"
+      }
+    },
+    "activities": [
+      {
+        "name": "Run Claims Quality Notebook",
+        "type": "TridentNotebook",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.03:30:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 120
+        },
+        "typeProperties": {
+          "notebookId": "${NOTEBOOK_ID_CLAIMS_QUALITY}",
+          "workspaceId": "${WORKSPACE_ID}",
+          "parameters": {
+            "ENVIRONMENT": {
+              "value": "@pipeline().parameters.environment",
+              "type": "Expression"
+            },
+            "PROCESSING_DATE": {
+              "value": "@pipeline().parameters.processing_date",
+              "type": "Expression"
+            },
+            "PIPELINE_RUN_ID": {
+              "value": "@pipeline().parameters.pipeline_run_id",
+              "type": "Expression"
+            }
+          }
+        }
+      },
+      {
+        "name": "Claims Quality Failure",
+        "type": "Fail",
+        "dependsOn": [
+          {
+            "activity": "Run Claims Quality Notebook",
+            "dependencyConditions": [
+              "Failed",
+              "TimedOut"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "message": "Claims quality notebook failed after retries.",
+          "errorCode": "CLAIMS_QUALITY_FAILED"
+        }
+      },
+      {
+        "name": "Mark Claims Pipeline Success",
+        "type": "SetVariable",
+        "dependsOn": [
+          {
+            "activity": "Run Claims Quality Notebook",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "variableName": "pipeline_status",
+          "value": "Succeeded"
+        }
+      }
+    ]
+  }
+}

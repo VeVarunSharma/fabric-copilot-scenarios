@@ -1,0 +1,57 @@
+table Customer
+
+	column 'Customer Key'
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: customer_key
+
+	/// Stable business identifier for each customer.
+	column 'Customer ID'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: customer_id
+
+	/// Customer display name used in reports and Copilot prompts.
+	column 'Customer Name'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: customer_name
+
+	/// Loyalty program segment.
+	column 'Loyalty Tier'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: loyalty_tier
+
+	/// Customer home region.
+	column 'Home Region'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: home_region
+
+	/// Customer signup date.
+	column 'Signup Date'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: signup_date
+
+	/// Safe demo email domain attribute.
+	column 'Email Domain'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: email_domain
+
+	column 'Synthetic Record'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: synthetic_record
+
+	partition Customer = entity
+		mode: directLake
+		source
+			entityName: Customer
+			schemaName: gold
+			expressionSource: DL_RetailLakehouse

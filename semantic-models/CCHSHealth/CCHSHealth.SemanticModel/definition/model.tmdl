@@ -1,0 +1,25 @@
+model Model
+	culture: en-CA
+	sourceQueryCulture: en-CA
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+
+expression 'CCHS Data Root' =
+		"../../../datasets/public/cchs-annual/snapshot" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	annotation PBI_NavigationStepName = Navigation
+
+ref table Period
+ref table Geography
+ref table 'Age Group'
+ref table Sex
+ref table Indicator
+ref table Characteristic
+ref table 'Quality Status'
+ref table 'Health Observation'
+ref relationship 'Health Observation to Period'
+ref relationship 'Health Observation to Geography'
+ref relationship 'Health Observation to Age Group'
+ref relationship 'Health Observation to Sex'
+ref relationship 'Health Observation to Indicator'
+ref relationship 'Health Observation to Characteristic'
+ref relationship 'Health Observation to Quality Status'

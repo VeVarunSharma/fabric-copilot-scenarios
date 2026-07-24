@@ -1,0 +1,558 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/semanticModel/copilot/schema/1.0.0/schema.json",
+  "tables": [
+    {
+      "id": "period-table",
+      "name": "Period",
+      "visibility": "Visible",
+      "columns": [
+        {
+          "id": "period-key",
+          "name": "Period Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "reference-year",
+          "name": "Reference Year",
+          "visibility": "Visible",
+          "synonyms": [
+            "survey year",
+            "year"
+          ]
+        },
+        {
+          "id": "period-start-date",
+          "name": "Period Start Date",
+          "visibility": "Visible",
+          "synonyms": [
+            "survey date"
+          ]
+        },
+        {
+          "id": "survey-era",
+          "name": "Survey Era",
+          "visibility": "Visible",
+          "synonyms": [
+            "survey design"
+          ]
+        },
+        {
+          "id": "comparability-note",
+          "name": "Comparability Note",
+          "visibility": "Visible",
+          "synonyms": [
+            "redesign note"
+          ]
+        },
+        {
+          "id": "is-latest",
+          "name": "Is Latest",
+          "visibility": "Visible",
+          "synonyms": [
+            "latest year"
+          ]
+        }
+      ],
+      "measures": [],
+      "hierarchies": [],
+      "synonyms": [
+        "years",
+        "reference periods"
+      ]
+    },
+    {
+      "id": "geography-table",
+      "name": "Geography",
+      "visibility": "Visible",
+      "columns": [
+        {
+          "id": "geography-key",
+          "name": "Geography Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "geography-name",
+          "name": "Geography Name",
+          "visibility": "Visible",
+          "synonyms": [
+            "province",
+            "jurisdiction"
+          ]
+        },
+        {
+          "id": "geography-code",
+          "name": "Geography Code",
+          "visibility": "Visible",
+          "synonyms": [
+            "province code"
+          ]
+        },
+        {
+          "id": "dguid",
+          "name": "DGUID",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "geography-type",
+          "name": "Geography Type",
+          "visibility": "Visible",
+          "synonyms": [
+            "scope type"
+          ]
+        },
+        {
+          "id": "is-british-columbia",
+          "name": "Is British Columbia",
+          "visibility": "Visible",
+          "synonyms": [
+            "BC flag"
+          ]
+        },
+        {
+          "id": "is-canada-comparator",
+          "name": "Is Canada Comparator",
+          "visibility": "Visible",
+          "synonyms": [
+            "national comparator flag"
+          ]
+        }
+      ],
+      "measures": [],
+      "hierarchies": [],
+      "synonyms": [
+        "provinces",
+        "locations"
+      ]
+    },
+    {
+      "id": "age-group-table",
+      "name": "Age Group",
+      "visibility": "Visible",
+      "columns": [
+        {
+          "id": "age-group-key",
+          "name": "Age Group Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "age-group-name",
+          "name": "Age Group Name",
+          "visibility": "Visible",
+          "synonyms": [
+            "age",
+            "age band"
+          ]
+        },
+        {
+          "id": "age-group-type",
+          "name": "Age Group Type",
+          "visibility": "Visible",
+          "synonyms": [
+            "age scope type"
+          ]
+        }
+      ],
+      "measures": [],
+      "hierarchies": [],
+      "synonyms": [
+        "ages",
+        "demographic ages"
+      ]
+    },
+    {
+      "id": "sex-table",
+      "name": "Sex",
+      "visibility": "Visible",
+      "columns": [
+        {
+          "id": "sex-key",
+          "name": "Sex Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "sex-name",
+          "name": "Sex Name",
+          "visibility": "Visible",
+          "synonyms": [
+            "sex category"
+          ]
+        }
+      ],
+      "measures": [],
+      "hierarchies": [],
+      "synonyms": [
+        "published sex breakdown"
+      ]
+    },
+    {
+      "id": "indicator-table",
+      "name": "Indicator",
+      "visibility": "Visible",
+      "columns": [
+        {
+          "id": "indicator-key",
+          "name": "Indicator Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "indicator-name",
+          "name": "Indicator Name",
+          "visibility": "Visible",
+          "synonyms": [
+            "health indicator",
+            "measure topic"
+          ]
+        },
+        {
+          "id": "source-indicator-name",
+          "name": "Source Indicator Name",
+          "visibility": "Visible",
+          "synonyms": [
+            "Statistics Canada indicator"
+          ]
+        },
+        {
+          "id": "topic",
+          "name": "Topic",
+          "visibility": "Visible",
+          "synonyms": [
+            "health topic"
+          ]
+        },
+        {
+          "id": "age-scope",
+          "name": "Age Scope",
+          "visibility": "Visible",
+          "synonyms": [
+            "indicator age scope"
+          ]
+        }
+      ],
+      "measures": [],
+      "hierarchies": [],
+      "synonyms": [
+        "health indicators",
+        "CCHS indicators"
+      ]
+    },
+    {
+      "id": "characteristic-table",
+      "name": "Characteristic",
+      "visibility": "Visible",
+      "columns": [
+        {
+          "id": "characteristic-key",
+          "name": "Characteristic Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "characteristic-name",
+          "name": "Characteristic Name",
+          "visibility": "Visible",
+          "synonyms": [
+            "estimate type"
+          ]
+        },
+        {
+          "id": "source-characteristic-name",
+          "name": "Source Characteristic Name",
+          "visibility": "Visible",
+          "synonyms": [
+            "Statistics Canada characteristic"
+          ]
+        },
+        {
+          "id": "measure-family",
+          "name": "Measure Family",
+          "visibility": "Visible",
+          "synonyms": [
+            "value family"
+          ]
+        },
+        {
+          "id": "statistic-type",
+          "name": "Statistic Type",
+          "visibility": "Visible",
+          "synonyms": [
+            "estimate or confidence interval"
+          ]
+        },
+        {
+          "id": "unit",
+          "name": "Unit",
+          "visibility": "Visible",
+          "synonyms": [
+            "persons or percent"
+          ]
+        },
+        {
+          "id": "is-primary-estimate",
+          "name": "Is Primary Estimate",
+          "visibility": "Visible",
+          "synonyms": [
+            "estimate flag"
+          ]
+        }
+      ],
+      "measures": [],
+      "hierarchies": [],
+      "synonyms": [
+        "statistics",
+        "estimate characteristics"
+      ]
+    },
+    {
+      "id": "quality-status-table",
+      "name": "Quality Status",
+      "visibility": "Visible",
+      "columns": [
+        {
+          "id": "quality-status-key",
+          "name": "Quality Status Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "source-status",
+          "name": "Source Status",
+          "visibility": "Visible",
+          "synonyms": [
+            "quality symbol"
+          ]
+        },
+        {
+          "id": "status-label",
+          "name": "Status Label",
+          "visibility": "Visible",
+          "synonyms": [
+            "quality label"
+          ]
+        },
+        {
+          "id": "status-description",
+          "name": "Status Description",
+          "visibility": "Visible",
+          "synonyms": [
+            "quality explanation"
+          ]
+        },
+        {
+          "id": "is-usable",
+          "name": "Is Usable",
+          "visibility": "Visible",
+          "synonyms": [
+            "publishable flag"
+          ]
+        },
+        {
+          "id": "is-caution",
+          "name": "Is Caution",
+          "visibility": "Visible",
+          "synonyms": [
+            "use with caution flag"
+          ]
+        },
+        {
+          "id": "is-suppressed",
+          "name": "Is Suppressed",
+          "visibility": "Visible",
+          "synonyms": [
+            "suppression flag"
+          ]
+        }
+      ],
+      "measures": [],
+      "hierarchies": [],
+      "synonyms": [
+        "data quality",
+        "quality symbols"
+      ]
+    },
+    {
+      "id": "health-observation-table",
+      "name": "Health Observation",
+      "visibility": "Visible",
+      "columns": [
+        {
+          "id": "period-fk",
+          "name": "Period Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "geography-fk",
+          "name": "Geography Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "age-group-fk",
+          "name": "Age Group Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "sex-fk",
+          "name": "Sex Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "indicator-fk",
+          "name": "Indicator Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "characteristic-fk",
+          "name": "Characteristic Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "quality-status-fk",
+          "name": "Quality Status Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "estimate-column",
+          "name": "Estimate",
+          "visibility": "Hidden",
+          "synonyms": []
+        }
+      ],
+      "measures": [
+        {
+          "id": "health-estimate",
+          "name": "Health Estimate",
+          "visibility": "Visible",
+          "synonyms": [
+            "published estimate",
+            "health value"
+          ]
+        },
+        {
+          "id": "percent-estimate",
+          "name": "Percent Estimate",
+          "visibility": "Visible",
+          "synonyms": [
+            "percentage",
+            "rate"
+          ]
+        },
+        {
+          "id": "population-estimate",
+          "name": "Population Estimate",
+          "visibility": "Visible",
+          "synonyms": [
+            "people",
+            "population count"
+          ]
+        },
+        {
+          "id": "british-columbia-estimate",
+          "name": "British Columbia Estimate",
+          "visibility": "Visible",
+          "synonyms": [
+            "BC estimate"
+          ]
+        },
+        {
+          "id": "canada-estimate",
+          "name": "Canada Estimate",
+          "visibility": "Visible",
+          "synonyms": [
+            "Canada excluding territories estimate",
+            "national comparator"
+          ]
+        },
+        {
+          "id": "bc-canada-difference",
+          "name": "BC vs Canada Difference",
+          "visibility": "Visible",
+          "synonyms": [
+            "BC gap",
+            "difference from national comparator"
+          ]
+        },
+        {
+          "id": "latest-reference-year",
+          "name": "Latest Reference Year",
+          "visibility": "Visible",
+          "synonyms": [
+            "latest survey year"
+          ]
+        },
+        {
+          "id": "bc-province-rank",
+          "name": "British Columbia Province Rank",
+          "visibility": "Visible",
+          "synonyms": [
+            "BC rank"
+          ]
+        },
+        {
+          "id": "valid-province-count",
+          "name": "Valid Province Count",
+          "visibility": "Visible",
+          "synonyms": [
+            "provinces with data"
+          ]
+        },
+        {
+          "id": "caution-count",
+          "name": "Use With Caution Count",
+          "visibility": "Visible",
+          "synonyms": [
+            "E estimate count"
+          ]
+        },
+        {
+          "id": "suppressed-count",
+          "name": "Suppressed Observation Count",
+          "visibility": "Visible",
+          "synonyms": [
+            "suppression count"
+          ]
+        },
+        {
+          "id": "observation-count",
+          "name": "Observation Count",
+          "visibility": "Visible",
+          "synonyms": [
+            "aggregate row count"
+          ]
+        },
+        {
+          "id": "status-label-measure",
+          "name": "Estimate Status Label",
+          "visibility": "Visible",
+          "synonyms": [
+            "estimate quality"
+          ]
+        },
+        {
+          "id": "html-spotlight-card",
+          "name": "HTML Spotlight Card",
+          "visibility": "Visible",
+          "synonyms": [
+            "custom spotlight card"
+          ]
+        }
+      ],
+      "hierarchies": [],
+      "synonyms": [
+        "health estimates",
+        "CCHS observations"
+      ]
+    }
+  ]
+}

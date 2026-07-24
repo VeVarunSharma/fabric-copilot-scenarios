@@ -1,0 +1,317 @@
+{
+  "title": "Retail purchases to report-scaffold lineage",
+  "description": "Deterministic lineage map for the committed Fabric retail medallion flow.",
+  "nodes": [
+    {
+      "id": "purchases_csv",
+      "label": "purchases.csv",
+      "type": "source",
+      "owner": "Fabric Data Engineering",
+      "path": "datasets/synthetic/retail-purchases/purchases.csv"
+    },
+    {
+      "id": "customers_csv",
+      "label": "customers.csv",
+      "type": "source",
+      "owner": "Fabric Data Engineering",
+      "path": "datasets/synthetic/retail-purchases/customers.csv"
+    },
+    {
+      "id": "products_csv",
+      "label": "products.csv",
+      "type": "source",
+      "owner": "Fabric Data Engineering",
+      "path": "datasets/synthetic/retail-purchases/products.csv"
+    },
+    {
+      "id": "retail_medallion_pipeline",
+      "label": "retail-medallion.DataPipeline",
+      "type": "pipeline",
+      "owner": "Fabric Data Engineering",
+      "path": "pipelines/retail-medallion.DataPipeline/pipeline-content.json"
+    },
+    {
+      "id": "notebook_01_bronze",
+      "label": "01_bronze_ingestion",
+      "type": "notebook",
+      "owner": "Fabric Data Engineering",
+      "path": "notebooks/retail-medallion/01_bronze_ingestion.ipynb"
+    },
+    {
+      "id": "notebook_02_silver",
+      "label": "02_silver_transform",
+      "type": "notebook",
+      "owner": "Fabric Data Engineering",
+      "path": "notebooks/retail-medallion/02_silver_transform.ipynb"
+    },
+    {
+      "id": "notebook_03_gold",
+      "label": "03_gold_aggregations",
+      "type": "notebook",
+      "owner": "Fabric Data Engineering",
+      "path": "notebooks/retail-medallion/03_gold_aggregations.ipynb"
+    },
+    {
+      "id": "bronze_retail_purchases_raw",
+      "label": "bronze.retail_purchases_raw",
+      "type": "table",
+      "owner": "Fabric Data Engineering",
+      "path": "lakehouse/bronze/retail_purchases_raw"
+    },
+    {
+      "id": "bronze_retail_customers_raw",
+      "label": "bronze.retail_customers_raw",
+      "type": "table",
+      "owner": "Fabric Data Engineering",
+      "path": "lakehouse/bronze/retail_customers_raw"
+    },
+    {
+      "id": "bronze_retail_products_raw",
+      "label": "bronze.retail_products_raw",
+      "type": "table",
+      "owner": "Fabric Data Engineering",
+      "path": "lakehouse/bronze/retail_products_raw"
+    },
+    {
+      "id": "silver_retail_customers",
+      "label": "silver.retail_customers",
+      "type": "table",
+      "owner": "Fabric Data Engineering",
+      "path": "lakehouse/silver/retail_customers"
+    },
+    {
+      "id": "silver_retail_products",
+      "label": "silver.retail_products",
+      "type": "table",
+      "owner": "Fabric Data Engineering",
+      "path": "lakehouse/silver/retail_products"
+    },
+    {
+      "id": "silver_retail_sales_enriched",
+      "label": "silver.retail_sales_enriched",
+      "type": "table",
+      "owner": "Fabric Data Engineering",
+      "path": "lakehouse/silver/retail_sales_enriched"
+    },
+    {
+      "id": "silver_retail_purchases_quarantine",
+      "label": "silver.retail_purchases_quarantine",
+      "type": "table",
+      "owner": "Fabric Data Engineering",
+      "path": "lakehouse/silver/retail_purchases_quarantine"
+    },
+    {
+      "id": "gold_date",
+      "label": "gold.Date",
+      "type": "table",
+      "owner": "Retail Analytics",
+      "path": "lakehouse/gold/Date"
+    },
+    {
+      "id": "gold_customer",
+      "label": "gold.Customer",
+      "type": "table",
+      "owner": "Retail Analytics",
+      "path": "lakehouse/gold/Customer"
+    },
+    {
+      "id": "gold_product",
+      "label": "gold.Product",
+      "type": "table",
+      "owner": "Retail Analytics",
+      "path": "lakehouse/gold/Product"
+    },
+    {
+      "id": "gold_sales",
+      "label": "gold.Sales",
+      "type": "table",
+      "owner": "Retail Analytics",
+      "path": "lakehouse/gold/Sales"
+    },
+    {
+      "id": "gold_sales_monthly_summary",
+      "label": "gold.sales_monthly_summary",
+      "type": "table",
+      "owner": "Retail Analytics",
+      "path": "lakehouse/gold/sales_monthly_summary"
+    },
+    {
+      "id": "retailsales_semantic_model",
+      "label": "RetailSales semantic model",
+      "type": "semantic_model",
+      "owner": "Retail Analytics",
+      "path": "semantic-models/RetailSales/RetailSales.SemanticModel/"
+    },
+    {
+      "id": "retailsales_report",
+      "label": "RetailSales report scaffold",
+      "type": "report",
+      "owner": "Retail Analytics",
+      "path": "semantic-models/RetailSales/RetailSales.Report/"
+    }
+  ],
+  "edges": [
+    {
+      "from": "purchases_csv",
+      "to": "retail_medallion_pipeline",
+      "relationship": "landed for"
+    },
+    {
+      "from": "customers_csv",
+      "to": "retail_medallion_pipeline",
+      "relationship": "landed for"
+    },
+    {
+      "from": "products_csv",
+      "to": "retail_medallion_pipeline",
+      "relationship": "landed for"
+    },
+    {
+      "from": "retail_medallion_pipeline",
+      "to": "notebook_01_bronze",
+      "relationship": "runs"
+    },
+    {
+      "from": "notebook_01_bronze",
+      "to": "bronze_retail_purchases_raw",
+      "relationship": "writes"
+    },
+    {
+      "from": "notebook_01_bronze",
+      "to": "bronze_retail_customers_raw",
+      "relationship": "writes"
+    },
+    {
+      "from": "notebook_01_bronze",
+      "to": "bronze_retail_products_raw",
+      "relationship": "writes"
+    },
+    {
+      "from": "bronze_retail_purchases_raw",
+      "to": "notebook_02_silver",
+      "relationship": "supplies"
+    },
+    {
+      "from": "bronze_retail_customers_raw",
+      "to": "notebook_02_silver",
+      "relationship": "supplies"
+    },
+    {
+      "from": "bronze_retail_products_raw",
+      "to": "notebook_02_silver",
+      "relationship": "supplies"
+    },
+    {
+      "from": "retail_medallion_pipeline",
+      "to": "notebook_02_silver",
+      "relationship": "runs"
+    },
+    {
+      "from": "notebook_02_silver",
+      "to": "silver_retail_customers",
+      "relationship": "writes"
+    },
+    {
+      "from": "notebook_02_silver",
+      "to": "silver_retail_products",
+      "relationship": "writes"
+    },
+    {
+      "from": "notebook_02_silver",
+      "to": "silver_retail_sales_enriched",
+      "relationship": "writes"
+    },
+    {
+      "from": "notebook_02_silver",
+      "to": "silver_retail_purchases_quarantine",
+      "relationship": "writes"
+    },
+    {
+      "from": "silver_retail_customers",
+      "to": "notebook_03_gold",
+      "relationship": "supplies"
+    },
+    {
+      "from": "silver_retail_products",
+      "to": "notebook_03_gold",
+      "relationship": "supplies"
+    },
+    {
+      "from": "silver_retail_sales_enriched",
+      "to": "notebook_03_gold",
+      "relationship": "supplies"
+    },
+    {
+      "from": "retail_medallion_pipeline",
+      "to": "notebook_03_gold",
+      "relationship": "runs"
+    },
+    {
+      "from": "notebook_03_gold",
+      "to": "gold_date",
+      "relationship": "writes"
+    },
+    {
+      "from": "notebook_03_gold",
+      "to": "gold_customer",
+      "relationship": "writes"
+    },
+    {
+      "from": "notebook_03_gold",
+      "to": "gold_product",
+      "relationship": "writes"
+    },
+    {
+      "from": "notebook_03_gold",
+      "to": "gold_sales",
+      "relationship": "writes"
+    },
+    {
+      "from": "notebook_03_gold",
+      "to": "gold_sales_monthly_summary",
+      "relationship": "writes"
+    },
+    {
+      "from": "gold_date",
+      "to": "retailsales_semantic_model",
+      "relationship": "feeds"
+    },
+    {
+      "from": "gold_customer",
+      "to": "retailsales_semantic_model",
+      "relationship": "feeds"
+    },
+    {
+      "from": "gold_product",
+      "to": "retailsales_semantic_model",
+      "relationship": "feeds"
+    },
+    {
+      "from": "gold_sales",
+      "to": "retailsales_semantic_model",
+      "relationship": "feeds"
+    },
+    {
+      "from": "retailsales_semantic_model",
+      "to": "retailsales_report",
+      "relationship": "powers"
+    }
+  ],
+  "change_scenarios": [
+    {
+      "id": "purchase-schema-change",
+      "target": "purchases_csv",
+      "change": "Add a nullable promo_code column to purchases.csv and preserve deterministic ordering."
+    },
+    {
+      "id": "silver-logic-change",
+      "target": "silver_retail_sales_enriched",
+      "change": "Update margin handling when unit_cost is missing and the fallback cost calculation is used."
+    },
+    {
+      "id": "gold-sales-change",
+      "target": "gold_sales",
+      "change": "Change the published gross_margin_pct logic consumed by the RetailSales semantic model."
+    }
+  ]
+}

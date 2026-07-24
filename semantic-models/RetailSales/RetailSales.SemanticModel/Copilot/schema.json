@@ -1,0 +1,297 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/semanticModel/copilot/schema/1.0.0/schema.json",
+  "tables": [
+    {
+      "id": "date-table",
+      "name": "Date",
+      "visibility": "Visible",
+      "columns": [
+        {
+          "id": "date-key",
+          "name": "Date Key",
+          "visibility": "Hidden",
+          "synonyms": []
+        },
+        {
+          "id": "date-value",
+          "name": "Date",
+          "visibility": "Visible",
+          "synonyms": [
+            "calendar date"
+          ]
+        },
+        {
+          "id": "year",
+          "name": "Year",
+          "visibility": "Visible",
+          "synonyms": [
+            "calendar year"
+          ]
+        },
+        {
+          "id": "quarter",
+          "name": "Quarter",
+          "visibility": "Visible",
+          "synonyms": []
+        },
+        {
+          "id": "month-name",
+          "name": "Month Name",
+          "visibility": "Visible",
+          "synonyms": [
+            "month"
+          ]
+        }
+      ],
+      "measures": [],
+      "hierarchies": [
+        {
+          "id": "calendar-hierarchy",
+          "name": "Calendar Hierarchy",
+          "visibility": "Visible",
+          "levels": [
+            {
+              "id": "calendar-year-level",
+              "name": "Year",
+              "visibility": "Visible",
+              "synonyms": []
+            },
+            {
+              "id": "calendar-quarter-level",
+              "name": "Quarter",
+              "visibility": "Visible",
+              "synonyms": []
+            },
+            {
+              "id": "calendar-month-level",
+              "name": "Month Name",
+              "visibility": "Visible",
+              "synonyms": [
+                "month"
+              ]
+            },
+            {
+              "id": "calendar-date-level",
+              "name": "Date",
+              "visibility": "Visible",
+              "synonyms": [
+                "day"
+              ]
+            }
+          ],
+          "synonyms": [
+            "calendar"
+          ]
+        }
+      ],
+      "synonyms": [
+        "dates",
+        "calendar"
+      ]
+    },
+    {
+      "id": "customer-table",
+      "name": "Customer",
+      "visibility": "Visible",
+      "columns": [
+        {
+          "id": "customer-id",
+          "name": "Customer ID",
+          "visibility": "Visible",
+          "synonyms": [
+            "customer code"
+          ]
+        },
+        {
+          "id": "customer-name",
+          "name": "Customer Name",
+          "visibility": "Visible",
+          "synonyms": [
+            "customer"
+          ]
+        },
+        {
+          "id": "loyalty-tier",
+          "name": "Loyalty Tier",
+          "visibility": "Visible",
+          "synonyms": [
+            "tier"
+          ]
+        },
+        {
+          "id": "home-region",
+          "name": "Home Region",
+          "visibility": "Visible",
+          "synonyms": [
+            "region"
+          ]
+        }
+      ],
+      "measures": [],
+      "hierarchies": [],
+      "synonyms": [
+        "customers"
+      ]
+    },
+    {
+      "id": "product-table",
+      "name": "Product",
+      "visibility": "Visible",
+      "columns": [
+        {
+          "id": "product-id",
+          "name": "Product ID",
+          "visibility": "Visible",
+          "synonyms": [
+            "sku"
+          ]
+        },
+        {
+          "id": "product-name",
+          "name": "Product Name",
+          "visibility": "Visible",
+          "synonyms": [
+            "product"
+          ]
+        },
+        {
+          "id": "category",
+          "name": "Category",
+          "visibility": "Visible",
+          "synonyms": []
+        },
+        {
+          "id": "subcategory",
+          "name": "Subcategory",
+          "visibility": "Visible",
+          "synonyms": []
+        }
+      ],
+      "measures": [],
+      "hierarchies": [],
+      "synonyms": [
+        "products"
+      ]
+    },
+    {
+      "id": "sales-table",
+      "name": "Sales",
+      "visibility": "Visible",
+      "columns": [
+        {
+          "id": "order-id",
+          "name": "Order ID",
+          "visibility": "Visible",
+          "synonyms": [
+            "purchase id",
+            "order number"
+          ]
+        },
+        {
+          "id": "order-date",
+          "name": "Order Date",
+          "visibility": "Visible",
+          "synonyms": [
+            "purchase time",
+            "transaction date"
+          ]
+        },
+        {
+          "id": "channel",
+          "name": "Channel",
+          "visibility": "Visible",
+          "synonyms": [
+            "sales channel"
+          ]
+        },
+        {
+          "id": "store-id",
+          "name": "Store ID",
+          "visibility": "Visible",
+          "synonyms": [
+            "store"
+          ]
+        }
+      ],
+      "measures": [
+        {
+          "id": "total-revenue",
+          "name": "Total Revenue",
+          "visibility": "Visible",
+          "synonyms": [
+            "revenue",
+            "sales"
+          ]
+        },
+        {
+          "id": "total-cost",
+          "name": "Total Cost",
+          "visibility": "Visible",
+          "synonyms": [
+            "cost"
+          ]
+        },
+        {
+          "id": "gross-margin",
+          "name": "Gross Margin",
+          "visibility": "Visible",
+          "synonyms": [
+            "margin dollars"
+          ]
+        },
+        {
+          "id": "gross-margin-pct",
+          "name": "Gross Margin %",
+          "visibility": "Visible",
+          "synonyms": [
+            "margin percent"
+          ]
+        },
+        {
+          "id": "order-count",
+          "name": "Order Count",
+          "visibility": "Visible",
+          "synonyms": [
+            "purchases"
+          ]
+        },
+        {
+          "id": "average-order-value",
+          "name": "Average Order Value",
+          "visibility": "Visible",
+          "synonyms": [
+            "aov"
+          ]
+        },
+        {
+          "id": "revenue-ytd",
+          "name": "Revenue YTD",
+          "visibility": "Visible",
+          "synonyms": [
+            "year to date revenue"
+          ]
+        },
+        {
+          "id": "revenue-previous-year",
+          "name": "Revenue Previous Year",
+          "visibility": "Visible",
+          "synonyms": [
+            "prior year revenue"
+          ]
+        },
+        {
+          "id": "revenue-yoy-pct",
+          "name": "Revenue YoY %",
+          "visibility": "Visible",
+          "synonyms": [
+            "year over year growth"
+          ]
+        }
+      ],
+      "hierarchies": [],
+      "synonyms": [
+        "sales facts"
+      ]
+    }
+  ]
+}

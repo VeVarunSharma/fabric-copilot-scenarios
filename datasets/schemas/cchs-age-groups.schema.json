@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CCHS age group row schema",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "age_group_key",
+    "age_group_name",
+    "age_group_type",
+    "sort_order"
+  ],
+  "required": [
+    "age_group_key",
+    "age_group_name",
+    "age_group_type",
+    "sort_order"
+  ],
+  "properties": {
+    "age_group_key": { "type": "integer", "minimum": 1 },
+    "age_group_name": { "type": "string" },
+    "age_group_type": { "type": "string" },
+    "sort_order": { "type": "integer", "minimum": 1 }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Retail products row schema",
+  "description": "Row shape for datasets/synthetic/retail-purchases/products.csv.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "product_id",
+    "product_name",
+    "category",
+    "subcategory",
+    "unit_cost",
+    "unit_price",
+    "is_active",
+    "synthetic_record"
+  ],
+  "required": [
+    "product_id",
+    "product_name",
+    "category",
+    "subcategory",
+    "unit_cost",
+    "unit_price",
+    "is_active",
+    "synthetic_record"
+  ],
+  "properties": {
+    "product_id": {
+      "type": "string"
+    },
+    "product_name": {
+      "type": "string",
+      "description": "Fictional product display name for retail model visuals."
+    },
+    "category": {
+      "type": "string"
+    },
+    "subcategory": {
+      "type": "string"
+    },
+    "unit_cost": {
+      "type": "number",
+      "description": "Positive demo unit cost that remains below unit_price."
+    },
+    "unit_price": {
+      "type": "number"
+    },
+    "is_active": {
+      "type": "string"
+    },
+    "synthetic_record": {
+      "type": "string",
+      "const": "SYNTHETIC"
+    }
+  }
+}

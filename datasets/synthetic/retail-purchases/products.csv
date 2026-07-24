@@ -1,0 +1,8 @@
+product_id,product_name,category,subcategory,unit_cost,unit_price,is_active,synthetic_record
+SKU-1000,Summit Jacket 1,apparel,outerwear,5.60,14.00,true,SYNTHETIC
+SKU-1001,Pulse Speaker 2,electronics,audio,7.70,19.50,true,SYNTHETIC
+SKU-1002,Harbor Lamp 3,home,decor,9.80,25.00,true,SYNTHETIC
+SKU-1003,Cedar Tea 4,grocery,beverage,11.90,30.50,true,SYNTHETIC
+SKU-1004,Summit Jacket 5,apparel,outerwear,14.00,36.00,true,SYNTHETIC
+SKU-1005,Pulse Speaker 6,electronics,audio,16.10,41.50,true,SYNTHETIC
+SKU-1006,Harbor Lamp 7,home,decor,18.20,47.00,true,SYNTHETIC

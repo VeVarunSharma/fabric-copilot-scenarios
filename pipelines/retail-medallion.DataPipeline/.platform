@@ -1,0 +1,7 @@
+{
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "Retail Medallion Pipeline",
+    "description": "Retail purchases medallion Fabric pipeline source definition."
+  }
+}

@@ -1,0 +1,9 @@
+indicator_key,indicator_name,source_indicator_name,topic,age_scope,sort_order
+1,Perceived Health,"Perceived health, very good or excellent",Health status,12 years and over,1
+2,Perceived Mental Health,"Perceived mental health, very good or excellent",Mental health and well-being,12 years and over,2
+3,High Life Stress,"Perceived life stress, most days quite a bit or extremely stressful",Mental health and well-being,12 years and over,3
+4,Life Satisfaction,"Life satisfaction, satisfied or very satisfied",Mental health and well-being,12 years and over,4
+5,Current Smoking,"Current smoker, daily or occasional",Lifestyle,12 years and over,5
+6,Heavy Drinking,Heavy drinking,Lifestyle,12 years and over,6
+7,Adult Physical Activity,"Self-reported physical activity, 150 minutes per week, adult (18 years and over)",Lifestyle,18 years and over,7
+8,Regular Healthcare Provider,Has a regular healthcare provider,Healthcare access,12 years and over,8

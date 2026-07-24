@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Financial accounts row schema",
+  "description": "Row shape for datasets/synthetic/financial-reporting/accounts.csv.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "account_id",
+    "account_name",
+    "account_type",
+    "reporting_line",
+    "normal_balance",
+    "synthetic_record"
+  ],
+  "required": [
+    "account_id",
+    "account_name",
+    "account_type",
+    "reporting_line",
+    "normal_balance",
+    "synthetic_record"
+  ],
+  "properties": {
+    "account_id": {
+      "type": "string"
+    },
+    "account_name": {
+      "type": "string"
+    },
+    "account_type": {
+      "type": "string"
+    },
+    "reporting_line": {
+      "type": "string"
+    },
+    "normal_balance": {
+      "type": "string"
+    },
+    "synthetic_record": {
+      "type": "string",
+      "const": "SYNTHETIC"
+    }
+  }
+}

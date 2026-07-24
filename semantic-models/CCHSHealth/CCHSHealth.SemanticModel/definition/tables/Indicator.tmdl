@@ -1,0 +1,66 @@
+table Indicator
+	description: Eight selected health indicators from archived Statistics Canada table 13-10-0096-01, with business-friendly and source labels preserved.
+
+	column 'Indicator Key'
+		dataType: int64
+		sourceColumn: indicator_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Indicator Name'
+		dataType: string
+		sourceColumn: indicator_name
+		summarizeBy: none
+		sortByColumn: 'Indicator Sort Order'
+		description: Short business-friendly indicator name used in the report.
+
+	column 'Source Indicator Name'
+		dataType: string
+		sourceColumn: source_indicator_name
+		summarizeBy: none
+		description: Full Statistics Canada indicator label retained for lineage.
+
+	column Topic
+		dataType: string
+		sourceColumn: topic
+		summarizeBy: none
+		description: Demonstration topic used to group indicators.
+
+	column 'Age Scope'
+		dataType: string
+		sourceColumn: age_scope
+		summarizeBy: none
+		description: Total age scope expected for the indicator. Adult Physical Activity uses 18 years and over; the other indicators use 12 years and over.
+
+	column 'Indicator Sort Order'
+		dataType: int64
+		sourceColumn: sort_order
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	partition Indicator = m
+		mode: import
+		source =
+				let
+					DataRoot = Text.TrimEnd(#"CCHS Data Root", {"/", "\"}),
+					Source = Csv.Document(
+						File.Contents(DataRoot & "/indicators.csv"),
+						[Delimiter = ",", Columns = 6, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+					),
+					Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(
+						Headers,
+						{
+							{"indicator_key", Int64.Type},
+							{"indicator_name", type text},
+							{"source_indicator_name", type text},
+							{"topic", type text},
+							{"age_scope", type text},
+							{"sort_order", Int64.Type}
+						},
+						"en-CA"
+					)
+				in
+					Typed

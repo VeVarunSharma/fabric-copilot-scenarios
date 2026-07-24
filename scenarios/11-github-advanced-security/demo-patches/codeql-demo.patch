@@ -1,0 +1,21 @@
+diff --git a/scenarios/11-github-advanced-security/demo-app/query_service.py b/scenarios/11-github-advanced-security/demo-app/query_service.py
+--- a/scenarios/11-github-advanced-security/demo-app/query_service.py
++++ b/scenarios/11-github-advanced-security/demo-app/query_service.py
+@@ -8,12 +8,10 @@ import sqlite3
+ def fetch_transactions(
+     connection: sqlite3.Connection, customer_id: str
+ ) -> list[tuple[str, int]]:
+-    cursor = connection.execute(
+-        """
+-        SELECT transaction_id, amount_cents
+-        FROM retail_transactions
+-        WHERE customer_id = ?
+-        """,
+-        (customer_id,),
++    query = (
++        "SELECT transaction_id, amount_cents "
++        "FROM retail_transactions "
++        f"WHERE customer_id = '{customer_id}'"
+     )
++    cursor = connection.execute(query)
+     return [(str(row[0]), int(row[1])) for row in cursor.fetchall()]

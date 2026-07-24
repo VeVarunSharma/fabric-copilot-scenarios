@@ -1,0 +1,81 @@
+table Geography
+	description: Canada excluding territories and the ten provinces represented in Statistics Canada table 13-10-0096-01. The national member is a comparator, not an all-Canada total.
+
+	column 'Geography Key'
+		dataType: int64
+		sourceColumn: geography_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Geography Name'
+		dataType: string
+		sourceColumn: geography_name
+		summarizeBy: none
+		sortByColumn: 'Geography Sort Order'
+		description: Published geography name, including Canada (excluding territories).
+
+	column 'Geography Code'
+		dataType: string
+		sourceColumn: geography_code
+		summarizeBy: none
+		description: Short demonstration code for the province or national comparator.
+
+	column DGUID
+		dataType: string
+		sourceColumn: dguid
+		summarizeBy: none
+		description: Statistics Canada dissemination geography unique identifier when supplied.
+		isHidden
+
+	column 'Geography Type'
+		dataType: string
+		sourceColumn: geography_type
+		summarizeBy: none
+		description: Distinguishes provinces from the national comparator.
+
+	column 'Is British Columbia'
+		dataType: boolean
+		sourceColumn: is_british_columbia
+		summarizeBy: none
+		description: True for the British Columbia member used by BC-specific measures.
+
+	column 'Is Canada Comparator'
+		dataType: boolean
+		sourceColumn: is_canada_comparator
+		summarizeBy: none
+		description: True for Canada (excluding territories), the national comparison member.
+
+	column 'Geography Sort Order'
+		dataType: int64
+		sourceColumn: sort_order
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	partition Geography = m
+		mode: import
+		source =
+				let
+					DataRoot = Text.TrimEnd(#"CCHS Data Root", {"/", "\"}),
+					Source = Csv.Document(
+						File.Contents(DataRoot & "/geographies.csv"),
+						[Delimiter = ",", Columns = 8, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+					),
+					Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(
+						Headers,
+						{
+							{"geography_key", Int64.Type},
+							{"geography_name", type text},
+							{"geography_code", type text},
+							{"dguid", type text},
+							{"geography_type", type text},
+							{"is_british_columbia", type logical},
+							{"is_canada_comparator", type logical},
+							{"sort_order", Int64.Type}
+						},
+						"en-CA"
+					)
+				in
+					Typed

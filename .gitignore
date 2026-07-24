@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+
+# Editors and notebooks
+.DS_Store
+.idea/
+.vscode/settings.json
+.ipynb_checkpoints/
+
+# Local Fabric and Azure configuration
+scripts/fabric/config.json
+**/*.local.json
+.azure/*
+!.azure/infrastructure-plan.json
+!.azure/deployment-plan.md
+.fabric-demo.state.json
+infra/main.json
+infra/modules/*.json
+
+# Local output
+.tmp/
+tmp/
+artifacts/local/
+test-results/
+.cchs-cache/
+.cchs-test-output/

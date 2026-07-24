@@ -1,0 +1,161 @@
+table Sales
+
+	/// Curated revenue from retail purchases.
+	measure 'Total Revenue' = SUM(Sales[Revenue Amount])
+		formatString: $#,##0.00;($#,##0.00)
+		displayFolder: Financial
+
+	/// Curated cost from retail purchases.
+	measure 'Total Cost' = SUM(Sales[Cost Amount])
+		formatString: $#,##0.00;($#,##0.00)
+		displayFolder: Financial
+
+	/// Revenue minus cost.
+	measure 'Gross Margin' = [Total Revenue] - [Total Cost]
+		formatString: $#,##0.00;($#,##0.00)
+		displayFolder: Financial
+
+	/// Gross margin percentage.
+	measure 'Gross Margin %' = DIVIDE([Gross Margin], [Total Revenue])
+		formatString: 0.00%
+		displayFolder: Financial
+
+	/// Distinct purchase count.
+	measure 'Order Count' = DISTINCTCOUNT(Sales[Order ID])
+		formatString: #,##0
+		displayFolder: Orders
+
+	/// Revenue divided by distinct purchase count.
+	measure 'Average Order Value' = DIVIDE([Total Revenue], [Order Count])
+		formatString: $#,##0.00;($#,##0.00)
+		displayFolder: Orders
+
+	/// Year-to-date revenue.
+	measure 'Revenue YTD' = TOTALYTD([Total Revenue], Date[Date])
+		formatString: $#,##0.00;($#,##0.00)
+		displayFolder: Time Intelligence
+
+	/// Revenue for the same period in the prior year.
+	measure 'Revenue Previous Year' = CALCULATE([Total Revenue], SAMEPERIODLASTYEAR(Date[Date]))
+		formatString: $#,##0.00;($#,##0.00)
+		displayFolder: Time Intelligence
+
+	/// Year-over-year revenue growth percentage.
+	measure 'Revenue YoY %' = DIVIDE([Total Revenue] - [Revenue Previous Year], [Revenue Previous Year])
+		formatString: 0.00%
+		displayFolder: Time Intelligence
+
+	column 'Sales Key'
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: sales_key
+
+	column 'Date Key'
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: date_key
+
+	column 'Customer Key'
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: customer_key
+
+	column 'Product Key'
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: product_key
+
+	/// Stable business identifier for each order.
+	column 'Order ID'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: purchase_id
+
+	/// Transaction timestamp for the order.
+	column 'Order Date'
+		dataType: dateTime
+		formatString: yyyy-mm-dd hh:mm:ss
+		summarizeBy: none
+		sourceColumn: purchase_ts
+
+	column 'Ingest Timestamp'
+		dataType: dateTime
+		isHidden
+		summarizeBy: none
+		sourceColumn: ingest_ts
+
+	/// Store identifier for in-person orders.
+	column 'Store ID'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: store_id
+
+	/// Channel used for the order.
+	column Channel
+		dataType: string
+		summarizeBy: none
+		sourceColumn: channel
+
+	column Quantity
+		dataType: int64
+		isHidden
+		sourceColumn: quantity
+
+	column 'Unit Price'
+		dataType: decimal
+		isHidden
+		formatString: $#,##0.00;($#,##0.00)
+		sourceColumn: unit_price
+
+	column 'Unit Cost'
+		dataType: decimal
+		isHidden
+		formatString: $#,##0.00;($#,##0.00)
+		sourceColumn: unit_cost
+
+	column 'Revenue Amount'
+		dataType: decimal
+		isHidden
+		formatString: $#,##0.00;($#,##0.00)
+		sourceColumn: revenue
+
+	column 'Cost Amount'
+		dataType: decimal
+		isHidden
+		formatString: $#,##0.00;($#,##0.00)
+		sourceColumn: cost
+
+	column 'Gross Margin Amount'
+		dataType: decimal
+		isHidden
+		formatString: $#,##0.00;($#,##0.00)
+		sourceColumn: gross_margin
+
+	column 'Gross Margin Percent'
+		dataType: decimal
+		isHidden
+		formatString: 0.00%
+		sourceColumn: gross_margin_pct
+
+	column 'Anomaly Label'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: anomaly_label
+
+	column 'Synthetic Record'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: synthetic_record
+
+	partition Sales = entity
+		mode: directLake
+		source
+			entityName: Sales
+			schemaName: gold
+			expressionSource: DL_RetailLakehouse

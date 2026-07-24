@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CCHS indicator row schema",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "indicator_key",
+    "indicator_name",
+    "source_indicator_name",
+    "topic",
+    "age_scope",
+    "sort_order"
+  ],
+  "required": [
+    "indicator_key",
+    "indicator_name",
+    "source_indicator_name",
+    "topic",
+    "age_scope",
+    "sort_order"
+  ],
+  "properties": {
+    "indicator_key": { "type": "integer", "minimum": 1 },
+    "indicator_name": { "type": "string" },
+    "source_indicator_name": { "type": "string" },
+    "topic": { "type": "string" },
+    "age_scope": { "type": "string" },
+    "sort_order": { "type": "integer", "minimum": 1 }
+  }
+}

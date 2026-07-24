@@ -1,0 +1,182 @@
+{
+  "workspace": {
+    "displayName": "Fabric Copilot Scenarios - Dev"
+  },
+  "placeholders": {
+    "ENVIRONMENT": {
+      "value": "dev"
+    },
+    "PROCESSING_DATE": {
+      "value": "2026-01-01"
+    },
+    "PIPELINE_RUN_ID": {
+      "value": "local-example-run"
+    },
+    "WORKSPACE_ID": {
+      "from": "workspace",
+      "property": "id"
+    },
+    "DEFAULT_LAKEHOUSE_NAME": {
+      "from": "item",
+      "type": "Lakehouse",
+      "displayName": "RetailLakehouse",
+      "property": "displayName"
+    },
+    "DEFAULT_LAKEHOUSE_ID": {
+      "from": "item",
+      "type": "Lakehouse",
+      "displayName": "RetailLakehouse",
+      "property": "id"
+    },
+    "LAKEHOUSE_NAME": {
+      "from": "item",
+      "type": "Lakehouse",
+      "displayName": "RetailLakehouse",
+      "property": "displayName"
+    },
+    "LAKEHOUSE_ID": {
+      "from": "item",
+      "type": "Lakehouse",
+      "displayName": "RetailLakehouse",
+      "property": "id"
+    },
+    "GOLD_LAKEHOUSE_ID": {
+      "from": "item",
+      "type": "Lakehouse",
+      "displayName": "RetailLakehouse",
+      "property": "id"
+    },
+    "NOTEBOOK_ID_BRONZE": {
+      "from": "item",
+      "type": "Notebook",
+      "displayName": "Retail Bronze Ingestion",
+      "property": "id"
+    },
+    "NOTEBOOK_ID_SILVER": {
+      "from": "item",
+      "type": "Notebook",
+      "displayName": "Retail Silver Transform",
+      "property": "id"
+    },
+    "NOTEBOOK_ID_GOLD": {
+      "from": "item",
+      "type": "Notebook",
+      "displayName": "Retail Gold Aggregations",
+      "property": "id"
+    },
+    "NOTEBOOK_ID_CLAIMS_QUALITY": {
+      "from": "item",
+      "type": "Notebook",
+      "displayName": "Healthcare Claims Quality",
+      "property": "id"
+    }
+  },
+  "artifacts": [
+    {
+      "displayName": "Retail Bronze Ingestion",
+      "type": "Notebook",
+      "source": "notebooks/retail-medallion/01_bronze_ingestion.ipynb",
+      "description": "Retail bronze ingestion notebook.",
+      "format": "ipynb",
+      "partPath": "notebook-content.ipynb"
+    },
+    {
+      "displayName": "Retail Silver Transform",
+      "type": "Notebook",
+      "source": "notebooks/retail-medallion/02_silver_transform.ipynb",
+      "description": "Retail silver transformation notebook.",
+      "format": "ipynb",
+      "partPath": "notebook-content.ipynb"
+    },
+    {
+      "displayName": "Retail Gold Aggregations",
+      "type": "Notebook",
+      "source": "notebooks/retail-medallion/03_gold_aggregations.ipynb",
+      "description": "Retail gold aggregation notebook.",
+      "format": "ipynb",
+      "partPath": "notebook-content.ipynb"
+    },
+    {
+      "displayName": "Healthcare Claims Quality",
+      "type": "Notebook",
+      "source": "notebooks/healthcare-quality/claims_quality.ipynb",
+      "description": "Healthcare claims quality notebook.",
+      "format": "ipynb",
+      "partPath": "notebook-content.ipynb"
+    },
+    {
+      "displayName": "IoT Telemetry Processing",
+      "type": "Notebook",
+      "source": "notebooks/iot-telemetry/telemetry_processing.ipynb",
+      "description": "IoT telemetry processing notebook.",
+      "format": "ipynb",
+      "partPath": "notebook-content.ipynb"
+    },
+    {
+      "displayName": "Retail Medallion Pipeline",
+      "type": "DataPipeline",
+      "source": "pipelines/retail-medallion.DataPipeline",
+      "updateMetadata": true
+    },
+    {
+      "displayName": "Healthcare Quality Pipeline",
+      "type": "DataPipeline",
+      "source": "pipelines/healthcare-quality.DataPipeline",
+      "updateMetadata": true
+    },
+    {
+      "displayName": "RetailSales",
+      "type": "SemanticModel",
+      "source": "semantic-models/RetailSales/RetailSales.SemanticModel",
+      "format": "TMDL"
+    }
+  ],
+  "jobs": [
+    {
+      "name": "iot-telemetry-notebook",
+      "displayName": "IoT Telemetry Processing",
+      "itemType": "Notebook",
+      "jobType": "RunNotebook",
+      "wait": true,
+      "executionData": {
+        "configuration": {
+          "defaultLakehouse": {
+            "id": "${DEFAULT_LAKEHOUSE_ID}",
+            "name": "${DEFAULT_LAKEHOUSE_NAME}"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "ENVIRONMENT",
+          "value": "${ENVIRONMENT}",
+          "type": "string"
+        },
+        {
+          "name": "PROCESSING_DATE",
+          "value": "${PROCESSING_DATE}",
+          "type": "string"
+        },
+        {
+          "name": "PIPELINE_RUN_ID",
+          "value": "${PIPELINE_RUN_ID}",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "retail-medallion-pipeline",
+      "displayName": "Retail Medallion Pipeline",
+      "itemType": "DataPipeline",
+      "jobType": "Pipeline",
+      "wait": true
+    },
+    {
+      "name": "retailsales-refresh",
+      "displayName": "RetailSales",
+      "itemType": "SemanticModel",
+      "jobType": "Refresh",
+      "wait": true
+    }
+  ]
+}

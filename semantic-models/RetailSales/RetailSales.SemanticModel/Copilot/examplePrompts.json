@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/semanticModel/copilot/examplePrompts/1.0.0/schema.json",
+  "prompts": [
+    "Show Total Revenue and Gross Margin % by Category for the last 3 months.",
+    "Which LoyaltyTier has the highest Average Order Value this quarter?",
+    "Compare Revenue YTD against Revenue Previous Year by Channel."
+  ]
+}

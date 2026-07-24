@@ -1,0 +1,171 @@
+name: Fabric deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: GitHub environment name that supplies deployment variables and approvals.
+        required: true
+        type: choice
+        options:
+          - dev
+          - test
+          - prod
+      operation:
+        description: Deployment operation to pass to scripts/fabric/deploy.py.
+        required: true
+        default: plan
+        type: choice
+        options:
+          - validate
+          - plan
+          - deploy
+          - run
+          - verify
+      config-path:
+        description: Optional repository-relative deployment config path.
+        required: false
+        default: scripts/fabric/config.example.json
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  validate-local:
+    if: inputs.operation == 'validate'
+    name: Fabric validate (${{ inputs.environment }})
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    env:
+      DEPLOY_ENVIRONMENT: ${{ inputs.environment }}
+      FABRIC_OPERATION: ${{ inputs.operation }}
+      FABRIC_CONFIG_PATH: ${{ inputs['config-path'] }}
+      FABRIC_WORKSPACE_NAME: ${{ vars.FABRIC_WORKSPACE_NAME }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.11'
+
+      - name: Install the Python project
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install '.[dev]'
+
+      - name: Validate repository content for deployment
+        shell: bash
+        run: |
+          if [ ! -f scripts/fabric/deploy.py ]; then
+            echo '::error file=scripts/fabric/deploy.py::Deployment script not found. Add scripts/fabric/deploy.py before running this workflow.'
+            exit 1
+          fi
+          if [ ! -f pyproject.toml ]; then
+            echo '::error file=pyproject.toml::pyproject.toml not found. Add the Python project before running this workflow.'
+            exit 1
+          fi
+          if [ ! -f "$FABRIC_CONFIG_PATH" ]; then
+            echo "::error file=$FABRIC_CONFIG_PATH::Deployment config file not found."
+            exit 1
+          fi
+          if [ -z "$FABRIC_WORKSPACE_NAME" ]; then
+            echo '::error::Missing required GitHub environment variable: FABRIC_WORKSPACE_NAME'
+            echo '::error::Configure FABRIC_WORKSPACE_NAME on the selected GitHub environment before rerunning validate.'
+            exit 1
+          fi
+
+      - name: Run deployment command
+        shell: bash
+        run: |
+          cmd=(python scripts/fabric/deploy.py --config "$FABRIC_CONFIG_PATH" --environment "$DEPLOY_ENVIRONMENT" --workspace-name "$FABRIC_WORKSPACE_NAME")
+          cmd+=("$FABRIC_OPERATION")
+          printf 'Running: %q ' "${cmd[@]}"
+          echo
+          "${cmd[@]}"
+
+  deploy-remote:
+    if: inputs.operation != 'validate'
+    name: Fabric deploy (${{ inputs.environment }} / ${{ inputs.operation }})
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      DEPLOY_ENVIRONMENT: ${{ inputs.environment }}
+      FABRIC_OPERATION: ${{ inputs.operation }}
+      FABRIC_CONFIG_PATH: ${{ inputs['config-path'] }}
+      AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      FABRIC_WORKSPACE_NAME: ${{ vars.FABRIC_WORKSPACE_NAME }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.11'
+
+      - name: Install the Python project
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install '.[dev]'
+
+      - name: Validate repository content for deployment
+        shell: bash
+        run: |
+          if [ ! -f scripts/fabric/deploy.py ]; then
+            echo '::error file=scripts/fabric/deploy.py::Deployment script not found. Add scripts/fabric/deploy.py before running this workflow.'
+            exit 1
+          fi
+          if [ ! -f pyproject.toml ]; then
+            echo '::error file=pyproject.toml::pyproject.toml not found. Add the Python project before running this workflow.'
+            exit 1
+          fi
+          if [ ! -f "$FABRIC_CONFIG_PATH" ]; then
+            echo "::error file=$FABRIC_CONFIG_PATH::Deployment config file not found."
+            exit 1
+          fi
+
+      - name: Validate required Azure OIDC variables
+        shell: bash
+        run: |
+          missing=()
+          for key in AZURE_CLIENT_ID AZURE_TENANT_ID AZURE_SUBSCRIPTION_ID FABRIC_WORKSPACE_NAME; do
+            if [ -z "${!key}" ]; then
+              missing+=("$key")
+            fi
+          done
+          if [ ${#missing[@]} -gt 0 ]; then
+            printf '::error::Missing required GitHub environment variables: %s\n' "${missing[*]}"
+            echo '::error::Configure Azure OIDC variables on the selected GitHub environment before rerunning a remote operation.'
+            exit 1
+          fi
+
+      - name: Authenticate to Azure with OIDC
+        uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3.0.0
+        with:
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Run deployment command
+        shell: bash
+        run: |
+          cmd=(python scripts/fabric/deploy.py --config "$FABRIC_CONFIG_PATH" --environment "$DEPLOY_ENVIRONMENT" --workspace-name "$FABRIC_WORKSPACE_NAME" "$FABRIC_OPERATION")
+          printf 'Running: %q ' "${cmd[@]}"
+          echo
+          "${cmd[@]}"

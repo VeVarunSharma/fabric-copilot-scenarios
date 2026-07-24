@@ -1,0 +1,67 @@
+name: Scenario request
+description: Propose a new customer-facing scenario, artifact, or workshop flow.
+title: '[Scenario]: '
+labels:
+  - scenario
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request a new or expanded scenario for the repository.
+  - type: input
+    id: scenario-name
+    attributes:
+      label: Scenario name
+      placeholder: Late-arriving retail data reconciliation
+    validations:
+      required: true
+  - type: dropdown
+    id: persona
+    attributes:
+      label: Primary persona
+      options:
+        - Data engineer
+        - Analytics engineer
+        - BI developer
+        - Solution architect
+        - Platform administrator
+        - Workshop facilitator
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: business-problem
+    attributes:
+      label: Business problem
+      description: Explain the real-world question the scenario should answer.
+    validations:
+      required: true
+  - type: textarea
+    id: copilot-value
+    attributes:
+      label: What work should Copilot eliminate?
+      description: Describe the repetitive or high-friction work the scenario should reduce.
+    validations:
+      required: true
+  - type: textarea
+    id: artifacts
+    attributes:
+      label: Candidate artifacts
+      description: Identify notebooks, pipelines, semantic models, DAX, docs, prompts, or workflows that should be included.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation expectations
+      description: Describe how reviewers should verify the scenario.
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Safety checklist
+      options:
+        - label: This request can be fulfilled with synthetic or fictional data only.
+          required: true
+        - label: This request does not require committing secrets, tenant IDs, or long-lived credentials.
+          required: true

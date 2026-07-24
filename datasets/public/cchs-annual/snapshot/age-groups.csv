@@ -1,0 +1,8 @@
+age_group_key,age_group_name,age_group_type,sort_order
+1,"Total, 12 years and over",Total,1
+2,"Total, 18 years and over",Total,2
+3,12 to 17 years,Age band,3
+4,18 to 34 years,Age band,4
+5,35 to 49 years,Age band,5
+6,50 to 64 years,Age band,6
+7,65 years and over,Age band,7

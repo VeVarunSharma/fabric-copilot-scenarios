@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Customer transactions row schema",
+  "description": "Row shape for datasets/synthetic/customer-transactions/transactions.csv.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "transaction_id",
+    "customer_id",
+    "transaction_ts",
+    "ingest_ts",
+    "merchant_category",
+    "channel",
+    "amount",
+    "currency",
+    "region",
+    "payment_method",
+    "synthetic_record",
+    "anomaly_label"
+  ],
+  "required": [
+    "transaction_id",
+    "customer_id",
+    "transaction_ts",
+    "ingest_ts",
+    "merchant_category",
+    "channel",
+    "amount",
+    "currency",
+    "region",
+    "payment_method",
+    "synthetic_record",
+    "anomaly_label"
+  ],
+  "properties": {
+    "transaction_id": {
+      "type": "string",
+      "description": "Synthetic transaction identifier."
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Synthetic customer token."
+    },
+    "transaction_ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Event time."
+    },
+    "ingest_ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Landing or ingest time."
+    },
+    "merchant_category": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "payment_method": {
+      "type": "string"
+    },
+    "synthetic_record": {
+      "type": "string",
+      "const": "SYNTHETIC"
+    },
+    "anomaly_label": {
+      "type": "string"
+    }
+  }
+}

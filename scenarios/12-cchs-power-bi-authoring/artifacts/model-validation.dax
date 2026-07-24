@@ -1,0 +1,80 @@
+// Run each EVALUATE block independently in DAX Query View or through the Modeling MCP server.
+
+// 1. Contract row counts.
+EVALUATE
+ROW(
+    "Health Observation Rows", COUNTROWS('Health Observation'),
+    "Period Rows", COUNTROWS('Period'),
+    "Geography Rows", COUNTROWS('Geography'),
+    "Indicator Rows", COUNTROWS('Indicator'),
+    "Characteristic Rows", COUNTROWS('Characteristic'),
+    "Quality Status Rows", COUNTROWS('Quality Status')
+)
+
+// Expected: 76032, 8, 11, 8, 6, and 5.
+
+// 2. Default BC versus national comparator check.
+EVALUATE
+CALCULATETABLE(
+    ROW(
+        "Reference Year", [Latest Reference Year],
+        "British Columbia Percent", CALCULATE(
+            [Percent Estimate],
+            REMOVEFILTERS('Geography'),
+            'Geography'[Is British Columbia] = TRUE()
+        ),
+        "Canada Excluding Territories Percent", CALCULATE(
+            [Percent Estimate],
+            REMOVEFILTERS('Geography'),
+            'Geography'[Is Canada Comparator] = TRUE()
+        ),
+        "Difference Percentage Points", CALCULATE(
+            [BC vs Canada Difference],
+            REMOVEFILTERS('Characteristic'),
+            'Characteristic'[Characteristic Name] = "Percent Estimate"
+        )
+    ),
+    TREATAS({2022}, 'Period'[Reference Year]),
+    TREATAS({"Perceived Health"}, 'Indicator'[Indicator Name]),
+    TREATAS({"Total, 12 years and over"}, 'Age Group'[Age Group Name]),
+    TREATAS({"Both sexes"}, 'Sex'[Sex Name])
+)
+
+// 3. British Columbia rank and valid province count.
+EVALUATE
+CALCULATETABLE(
+    ROW(
+        "British Columbia Province Rank", [British Columbia Province Rank],
+        "Valid Province Count", [Valid Province Count]
+    ),
+    TREATAS({2022}, 'Period'[Reference Year]),
+    TREATAS({"Current Smoking"}, 'Indicator'[Indicator Name]),
+    TREATAS({"Total, 12 years and over"}, 'Age Group'[Age Group Name]),
+    TREATAS({"Both sexes"}, 'Sex'[Sex Name]),
+    TREATAS({"Percent Estimate"}, 'Characteristic'[Characteristic Name])
+)
+
+// 4. Quality-status preservation.
+EVALUATE
+SUMMARIZECOLUMNS(
+    'Quality Status'[Source Status],
+    'Quality Status'[Status Label],
+    "Observation Count", COUNTROWS('Health Observation'),
+    "Nonblank Estimate Count", COUNT('Health Observation'[Estimate])
+)
+ORDER BY 'Quality Status'[Source Status]
+
+// Expected: E rows can have values; F and x rows have no nonblank estimate values.
+
+// 5. Ambiguous context protection.
+EVALUATE
+CALCULATETABLE(
+    ROW(
+        "Health Estimate Is Blank", ISBLANK([Health Estimate]),
+        "Status Label", [Estimate Status Label]
+    ),
+    TREATAS({2022}, 'Period'[Reference Year]),
+    TREATAS({"Perceived Health"}, 'Indicator'[Indicator Name])
+)
+
+// Expected: TRUE and Multiple observations because geography, age group, sex, and characteristic are not singular.
