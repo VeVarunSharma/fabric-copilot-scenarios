@@ -1,0 +1,65 @@
+{
+  "contractVersion": "test-1.0",
+  "source": {
+    "productId": "13-10-0096-01",
+    "downloadRoot": "13100096",
+    "title": "Health characteristics, annual estimates, inactive",
+    "downloadUrl": "https://example.invalid/13100096-eng.zip",
+    "productUrl": "https://example.invalid/1310009601",
+    "licenceUrl": "https://www.statcan.gc.ca/en/terms-conditions/open-licence"
+  },
+  "referenceYears": [
+    2021,
+    2022
+  ],
+  "geographies": [
+    {
+      "sourceName": "Canada (excluding territories)",
+      "code": "CANX",
+      "type": "National comparator",
+      "sortOrder": 1
+    },
+    {
+      "sourceName": "British Columbia",
+      "code": "BC",
+      "type": "Province",
+      "sortOrder": 2
+    }
+  ],
+  "indicators": [
+    {
+      "sourceName": "Perceived health, very good or excellent",
+      "name": "Perceived Health",
+      "topic": "Health status",
+      "ageScope": "12 years and over",
+      "sortOrder": 1
+    },
+    {
+      "sourceName": "Current smoker, daily or occasional",
+      "name": "Current Smoking",
+      "topic": "Lifestyle",
+      "ageScope": "12 years and over",
+      "sortOrder": 2
+    }
+  ],
+  "characteristics": [
+    {
+      "sourceName": "Number of persons",
+      "name": "Population Estimate",
+      "measureFamily": "Population",
+      "statisticType": "Estimate",
+      "unit": "Persons",
+      "decimals": 0,
+      "sortOrder": 1
+    },
+    {
+      "sourceName": "Percent",
+      "name": "Percent Estimate",
+      "measureFamily": "Percent",
+      "statisticType": "Estimate",
+      "unit": "Percent",
+      "decimals": 1,
+      "sortOrder": 2
+    }
+  ]
+}

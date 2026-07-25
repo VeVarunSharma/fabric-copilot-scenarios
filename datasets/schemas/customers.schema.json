@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Retail customers row schema",
+  "description": "Row shape for datasets/synthetic/retail-purchases/customers.csv.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "customer_id",
+    "customer_name",
+    "loyalty_tier",
+    "home_region",
+    "signup_date",
+    "email_domain",
+    "synthetic_record"
+  ],
+  "required": [
+    "customer_id",
+    "customer_name",
+    "loyalty_tier",
+    "home_region",
+    "signup_date",
+    "email_domain",
+    "synthetic_record"
+  ],
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "Fictional customer display name for retail model joins and demos."
+    },
+    "loyalty_tier": {
+      "type": "string"
+    },
+    "home_region": {
+      "type": "string"
+    },
+    "signup_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "email_domain": {
+      "type": "string",
+      "description": "Safe demo-only domain value."
+    },
+    "synthetic_record": {
+      "type": "string",
+      "const": "SYNTHETIC"
+    }
+  }
+}

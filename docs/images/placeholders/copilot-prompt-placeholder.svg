@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Copilot prompt placeholder</title>
+  <desc id="desc">Placeholder UI image for copilot prompt placeholder.</desc>
+  <rect width="1600" height="900" fill="#f8fafc"/>
+  <rect x="40" y="40" width="1520" height="820" rx="28" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+  <rect x="40" y="40" width="1520" height="84" rx="28" fill="#0f172a"/>
+  <text x="88" y="92" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700">Copilot prompt placeholder</text>
+  <text x="88" y="146" fill="#475569" font-family="Arial, Helvetica, sans-serif" font-size="22">Prompt and response capture for customer-safe demonstrations</text>
+  <rect x="90" y="190" width="320" height="590" rx="18" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="460" y="190" width="1050" height="590" rx="18" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="120" y="235" width="220" height="20" rx="10" fill="#94a3b8"/>
+  <rect x="120" y="285" width="240" height="20" rx="10" fill="#cbd5e1"/>
+  <rect x="120" y="335" width="200" height="20" rx="10" fill="#cbd5e1"/>
+  <rect x="120" y="385" width="250" height="20" rx="10" fill="#cbd5e1"/>
+  <rect x="500" y="235" width="420" height="28" rx="12" fill="#1d4ed8"/>
+  <rect x="500" y="285" width="910" height="18" rx="9" fill="#cbd5e1"/>
+  <rect x="500" y="325" width="880" height="18" rx="9" fill="#cbd5e1"/>
+  <rect x="500" y="365" width="760" height="18" rx="9" fill="#cbd5e1"/>
+  <rect x="500" y="430" width="290" height="230" rx="16" fill="#dbeafe"/>
+  <rect x="825" y="430" width="290" height="230" rx="16" fill="#dcfce7"/>
+  <rect x="1150" y="430" width="290" height="230" rx="16" fill="#fef3c7"/>
+  <text x="960" y="740" text-anchor="middle" fill="#64748b" font-family="Arial, Helvetica, sans-serif" font-size="20">Replace with approved screenshot from a sanitized demo environment</text>
+</svg>

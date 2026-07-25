@@ -1,0 +1,19 @@
+{
+  "subscriptionId": "",
+  "location": "westus3",
+  "resourceGroupName": "rg-fabric-github-demo",
+  "capacityName": "",
+  "administratorUpn": "",
+  "workspace": {
+    "displayName": "fabric-with-github-demo",
+    "description": "On-demand Microsoft Fabric demo workspace for the fabric-with-github repository."
+  },
+  "github": {
+    "owner": "",
+    "repository": "",
+    "branch": "main",
+    "directory": "/",
+    "connectionName": "fabric-with-github-demo",
+    "initializeFromGit": true
+  }
+}

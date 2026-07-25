@@ -1,0 +1,41 @@
+-- Validation Query 1: yearly revenue trend.
+EVALUATE
+SUMMARIZECOLUMNS (
+    Date[Year],
+    "Total Revenue", [Total Revenue],
+    "Revenue YTD", [Revenue YTD],
+    "Revenue Previous Year", [Revenue Previous Year],
+    "Revenue YoY %", [Revenue YoY %]
+)
+ORDER BY Date[Year]
+
+-- Validation Query 2: month-level rolling trend.
+EVALUATE
+SUMMARIZECOLUMNS (
+    Date[Year],
+    Date[Month Number],
+    Date[Month Name],
+    "Total Revenue", [Total Revenue],
+    "Revenue Rolling 90 Days", [Revenue Rolling 90 Days]
+)
+ORDER BY Date[Year], Date[Month Number]
+
+-- Validation Query 3: product-category revenue and profitability.
+EVALUATE
+SUMMARIZECOLUMNS (
+    Product[Category],
+    "Total Revenue", [Total Revenue],
+    "Gross Margin %", [Gross Margin %],
+    "Average Order Value", [Average Order Value]
+)
+ORDER BY Product[Category]
+
+-- Validation Query 4: store-level spot check.
+EVALUATE
+SUMMARIZECOLUMNS (
+    Sales[Store ID],
+    "Order Count", [Order Count],
+    "Total Revenue", [Total Revenue],
+    "Revenue Previous Year", [Revenue Previous Year]
+)
+ORDER BY Sales[Store ID]

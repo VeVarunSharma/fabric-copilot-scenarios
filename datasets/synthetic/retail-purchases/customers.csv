@@ -1,0 +1,9 @@
+customer_id,customer_name,loyalty_tier,home_region,signup_date,email_domain,synthetic_record
+RCUST-100,Alex Harper,bronze,north,2025-08-01,example-retail.test,SYNTHETIC
+RCUST-101,Jordan Quinn,silver,south,2025-08-18,sample-shop.test,SYNTHETIC
+RCUST-102,Taylor Sawyer,gold,east,2025-09-04,example-retail.test,SYNTHETIC
+RCUST-103,Morgan Kendall,platinum,west,2025-09-21,sample-shop.test,SYNTHETIC
+RCUST-104,Riley Monroe,bronze,north,2025-10-08,example-retail.test,SYNTHETIC
+RCUST-105,Casey Reese,silver,south,2025-10-25,sample-shop.test,SYNTHETIC
+RCUST-106,Avery Bailey,gold,east,2025-11-11,example-retail.test,SYNTHETIC
+RCUST-107,Parker Lane,platinum,west,2025-11-28,sample-shop.test,SYNTHETIC

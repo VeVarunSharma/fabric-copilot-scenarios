@@ -1,0 +1,67 @@
+name: Copilot Coding Agent task
+description: Define a scoped task for GitHub Copilot Coding Agent or similar implementation automation.
+title: '[Agent Task]: '
+labels:
+  - copilot-coding-agent
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for implementation-ready tasks with explicit acceptance criteria.
+
+        Keep the task small enough for a focused pull request and specify the exact repository paths that may change.
+  - type: input
+    id: summary
+    attributes:
+      label: Task summary
+      placeholder: Add late-arriving data handling to the retail Silver notebook
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Allowed file paths
+      description: List the exact files or directories the agent may edit.
+      placeholder: |
+        notebooks/retail-medallion/
+        tests/test_notebooks.py
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Provide numbered, testable requirements.
+      placeholder: |
+        1. Handle late-arriving records by...
+        2. Preserve explicit schema definitions...
+        3. Update tests to cover...
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Required validation
+      description: Commands, scripts, or checks the agent must run before completion.
+      placeholder: |
+        python scripts/validate_repository.py
+        python -m pytest -q tests/test_notebooks.py
+    validations:
+      required: true
+  - type: textarea
+    id: non-goals
+    attributes:
+      label: Non-goals / do not change
+      description: Call out areas that must remain untouched.
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Task readiness checklist
+      options:
+        - label: I included explicit acceptance criteria instead of a broad idea.
+          required: true
+        - label: I limited the scope to repository content that can be safely changed by automation.
+          required: true
+        - label: This task does not require real secrets, customer data, or non-source-controlled settings changes.
+          required: true

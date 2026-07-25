@@ -1,0 +1,13 @@
+transaction_id,customer_id,transaction_ts,ingest_ts,merchant_category,channel,amount,currency,region,payment_method,synthetic_record,anomaly_label
+TXN-1000,CUST-200,2026-01-10T09:00:00Z,2026-01-10T09:02:00Z,grocery,card_present,24.31,USD,north,credit,SYNTHETIC,none
+TXN-1001,CUST-201,2026-01-10T09:11:00Z,2026-01-10T09:14:00Z,travel,ecommerce,32.17,USD,south,debit,SYNTHETIC,none
+TXN-1002,CUST-202,2026-01-10T09:22:00Z,2026-01-10T09:26:00Z,software,mobile_wallet,37.80,USD,east,prepaid,SYNTHETIC,none
+TXN-1003,CUST-203,2026-01-10T09:33:00Z,2026-01-10T09:38:00Z,fuel,card_present,46.47,USD,west,credit,SYNTHETIC,none
+TXN-1004,CUST-204,2026-01-10T09:44:00Z,2026-01-10T09:46:00Z,dining,ecommerce,52.10,USD,north,debit,SYNTHETIC,none
+TXN-1005,CUST-205,2026-01-10T09:55:00Z,2026-01-10T09:58:00Z,grocery,mobile_wallet,58.59,USD,south,prepaid,SYNTHETIC,none
+TXN-1006,CUST-206,2026-01-10T10:06:00Z,2026-01-10T10:10:00Z,travel,card_present,65.60,USD,east,credit,SYNTHETIC,none
+TXN-1007,CUST-200,2026-01-10T10:17:00Z,2026-01-10T10:22:00Z,software,ecommerce,72.94,USD,west,debit,SYNTHETIC,none
+TXN-1008,CUST-201,2026-01-10T10:28:00Z,2026-01-10T10:30:00Z,fuel,mobile_wallet,80.30,USD,north,prepaid,SYNTHETIC,none
+TXN-1009,CUST-202,2026-01-10T10:39:00Z,2026-01-10T10:42:00Z,dining,card_present,86.46,USD,south,credit,SYNTHETIC,none
+TXN-2099,CUST-207,2026-01-09T16:40:00Z,2026-01-11T19:40:00Z,travel,ecommerce,148.20,USD,west,credit,SYNTHETIC,late_arrival
+TXN-1002,CUST-202,2026-01-10T09:22:00Z,2026-01-10T09:26:00Z,software,mobile_wallet,37.80,USD,east,prepaid,SYNTHETIC,duplicate_transaction

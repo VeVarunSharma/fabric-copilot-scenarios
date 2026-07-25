@@ -1,0 +1,7 @@
+{
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "Healthcare Quality Pipeline",
+    "description": "Healthcare claims quality Fabric pipeline source definition."
+  }
+}

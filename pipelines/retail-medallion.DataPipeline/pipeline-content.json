@@ -1,0 +1,196 @@
+{
+  "properties": {
+    "description": "Fabric retail-purchases medallion orchestration with bronze, silver, and gold notebook stages.",
+    "annotations": [
+      "retail-purchases",
+      "medallion",
+      "fabric-sample"
+    ],
+    "parameters": {
+      "environment": {
+        "type": "String",
+        "defaultValue": "${ENVIRONMENT}"
+      },
+      "processing_date": {
+        "type": "String",
+        "defaultValue": "@formatDateTime(addDays(utcNow(), -1), 'yyyy-MM-dd')"
+      },
+      "pipeline_run_id": {
+        "type": "String",
+        "defaultValue": "@pipeline().RunId"
+      }
+    },
+    "variables": {
+      "pipeline_status": {
+        "type": "String"
+      }
+    },
+    "activities": [
+      {
+        "name": "Run Bronze Ingestion",
+        "type": "TridentNotebook",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.04:00:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 120
+        },
+        "typeProperties": {
+          "notebookId": "${NOTEBOOK_ID_BRONZE}",
+          "workspaceId": "${WORKSPACE_ID}",
+          "parameters": {
+            "ENVIRONMENT": {
+              "value": "@pipeline().parameters.environment",
+              "type": "Expression"
+            },
+            "PROCESSING_DATE": {
+              "value": "@pipeline().parameters.processing_date",
+              "type": "Expression"
+            },
+            "PIPELINE_RUN_ID": {
+              "value": "@pipeline().parameters.pipeline_run_id",
+              "type": "Expression"
+            }
+          }
+        }
+      },
+      {
+        "name": "Bronze Failure",
+        "type": "Fail",
+        "dependsOn": [
+          {
+            "activity": "Run Bronze Ingestion",
+            "dependencyConditions": [
+              "Failed",
+              "TimedOut"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "message": "Retail bronze ingestion failed after retries.",
+          "errorCode": "RETAIL_BRONZE_FAILED"
+        }
+      },
+      {
+        "name": "Run Silver Transform",
+        "type": "TridentNotebook",
+        "dependsOn": [
+          {
+            "activity": "Run Bronze Ingestion",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.03:30:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 120
+        },
+        "typeProperties": {
+          "notebookId": "${NOTEBOOK_ID_SILVER}",
+          "workspaceId": "${WORKSPACE_ID}",
+          "parameters": {
+            "ENVIRONMENT": {
+              "value": "@pipeline().parameters.environment",
+              "type": "Expression"
+            },
+            "PROCESSING_DATE": {
+              "value": "@pipeline().parameters.processing_date",
+              "type": "Expression"
+            },
+            "PIPELINE_RUN_ID": {
+              "value": "@pipeline().parameters.pipeline_run_id",
+              "type": "Expression"
+            }
+          }
+        }
+      },
+      {
+        "name": "Silver Failure",
+        "type": "Fail",
+        "dependsOn": [
+          {
+            "activity": "Run Silver Transform",
+            "dependencyConditions": [
+              "Failed",
+              "TimedOut"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "message": "Retail silver transform failed after retries.",
+          "errorCode": "RETAIL_SILVER_FAILED"
+        }
+      },
+      {
+        "name": "Run Gold Aggregations",
+        "type": "TridentNotebook",
+        "dependsOn": [
+          {
+            "activity": "Run Silver Transform",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.03:00:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 180
+        },
+        "typeProperties": {
+          "notebookId": "${NOTEBOOK_ID_GOLD}",
+          "workspaceId": "${WORKSPACE_ID}",
+          "parameters": {
+            "ENVIRONMENT": {
+              "value": "@pipeline().parameters.environment",
+              "type": "Expression"
+            },
+            "PROCESSING_DATE": {
+              "value": "@pipeline().parameters.processing_date",
+              "type": "Expression"
+            },
+            "PIPELINE_RUN_ID": {
+              "value": "@pipeline().parameters.pipeline_run_id",
+              "type": "Expression"
+            }
+          }
+        }
+      },
+      {
+        "name": "Gold Failure",
+        "type": "Fail",
+        "dependsOn": [
+          {
+            "activity": "Run Gold Aggregations",
+            "dependencyConditions": [
+              "Failed",
+              "TimedOut"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "message": "Retail gold aggregation failed after retries.",
+          "errorCode": "RETAIL_GOLD_FAILED"
+        }
+      },
+      {
+        "name": "Mark Pipeline Success",
+        "type": "SetVariable",
+        "dependsOn": [
+          {
+            "activity": "Run Gold Aggregations",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "variableName": "pipeline_status",
+          "value": "Succeeded"
+        }
+      }
+    ]
+  }
+}

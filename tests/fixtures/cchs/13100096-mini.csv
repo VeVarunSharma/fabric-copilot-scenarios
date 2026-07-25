@@ -1,0 +1,9 @@
+REF_DATE,GEO,DGUID,Age group,Sex,Indicators,Characteristics,UOM,UOM_ID,SCALAR_FACTOR,SCALAR_ID,VECTOR,COORDINATE,VALUE,STATUS,SYMBOL,TERMINATED,DECIMALS
+2021,Canada (excluding territories),,"Total, 12 years and over",Both sexes,"Perceived health, very good or excellent",Number of persons,Number,223,units,0,v1,1.1.1.1.1,19000000,,,,0
+2021,Canada (excluding territories),,"Total, 12 years and over",Both sexes,"Perceived health, very good or excellent",Percent,Percent,239,units,0,v2,1.1.1.1.2,65.0,,,,1
+2021,British Columbia,2016A000259,"Total, 12 years and over",Both sexes,"Perceived health, very good or excellent",Number of persons,Number,223,units,0,v3,1.1.1.1.3,3200000,E,,,0
+2021,British Columbia,2016A000259,"Total, 12 years and over",Both sexes,"Perceived health, very good or excellent",Percent,Percent,239,units,0,v4,1.1.1.1.4,66.5,E,,,1
+2022,Canada (excluding territories),,"Total, 12 years and over",Both sexes,"Current smoker, daily or occasional",Number of persons,Number,223,units,0,v5,1.1.1.1.5,,F,,,0
+2022,Canada (excluding territories),,"Total, 12 years and over",Both sexes,"Current smoker, daily or occasional",Percent,Percent,239,units,0,v6,1.1.1.1.6,,x,,,1
+2022,British Columbia,2016A000259,"Total, 12 years and over",Both sexes,"Current smoker, daily or occasional",Number of persons,Number,223,units,0,v7,1.1.1.1.7,,..,,,0
+2022,British Columbia,2016A000259,"Total, 12 years and over",Both sexes,"Current smoker, daily or occasional",Percent,Percent,239,units,0,v8,1.1.1.1.8,12.3,,,,1

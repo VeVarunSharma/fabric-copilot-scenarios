@@ -1,0 +1,27 @@
+relationship 'Health Observation to Period'
+	fromColumn: 'Health Observation'.'Period Key'
+	toColumn: Period.'Period Key'
+
+relationship 'Health Observation to Geography'
+	fromColumn: 'Health Observation'.'Geography Key'
+	toColumn: Geography.'Geography Key'
+
+relationship 'Health Observation to Age Group'
+	fromColumn: 'Health Observation'.'Age Group Key'
+	toColumn: 'Age Group'.'Age Group Key'
+
+relationship 'Health Observation to Sex'
+	fromColumn: 'Health Observation'.'Sex Key'
+	toColumn: Sex.'Sex Key'
+
+relationship 'Health Observation to Indicator'
+	fromColumn: 'Health Observation'.'Indicator Key'
+	toColumn: Indicator.'Indicator Key'
+
+relationship 'Health Observation to Characteristic'
+	fromColumn: 'Health Observation'.'Characteristic Key'
+	toColumn: Characteristic.'Characteristic Key'
+
+relationship 'Health Observation to Quality Status'
+	fromColumn: 'Health Observation'.'Quality Status Key'
+	toColumn: 'Quality Status'.'Quality Status Key'

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CCHS geography row schema",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "geography_key",
+    "geography_name",
+    "geography_code",
+    "dguid",
+    "geography_type",
+    "is_british_columbia",
+    "is_canada_comparator",
+    "sort_order"
+  ],
+  "required": [
+    "geography_key",
+    "geography_name",
+    "geography_code",
+    "dguid",
+    "geography_type",
+    "is_british_columbia",
+    "is_canada_comparator",
+    "sort_order"
+  ],
+  "properties": {
+    "geography_key": { "type": "integer", "minimum": 1 },
+    "geography_name": { "type": "string" },
+    "geography_code": { "type": "string" },
+    "dguid": { "type": "string" },
+    "geography_type": { "type": "string" },
+    "is_british_columbia": { "type": "boolean" },
+    "is_canada_comparator": { "type": "boolean" },
+    "sort_order": { "type": "integer", "minimum": 1 }
+  }
+}

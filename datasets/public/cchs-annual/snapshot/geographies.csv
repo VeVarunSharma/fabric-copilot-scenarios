@@ -1,0 +1,12 @@
+geography_key,geography_name,geography_code,dguid,geography_type,is_british_columbia,is_canada_comparator,sort_order
+1,Canada (excluding territories),CANX,,National comparator,false,true,1
+2,Newfoundland and Labrador,NL,2016A000210,Province,false,false,2
+3,Prince Edward Island,PE,2016A000211,Province,false,false,3
+4,Nova Scotia,NS,2016A000212,Province,false,false,4
+5,New Brunswick,NB,2016A000213,Province,false,false,5
+6,Quebec,QC,2016A000224,Province,false,false,6
+7,Ontario,ON,2016A000235,Province,false,false,7
+8,Manitoba,MB,2016A000246,Province,false,false,8
+9,Saskatchewan,SK,2016A000247,Province,false,false,9
+10,Alberta,AB,2016A000248,Province,false,false,10
+11,British Columbia,BC,2016A000259,Province,true,false,11

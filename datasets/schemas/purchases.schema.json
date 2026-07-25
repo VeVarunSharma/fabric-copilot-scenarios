@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Retail purchases row schema",
+  "description": "Row shape for datasets/synthetic/retail-purchases/purchases.csv.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "purchase_id",
+    "customer_id",
+    "product_id",
+    "purchase_ts",
+    "ingest_ts",
+    "quantity",
+    "unit_price",
+    "store_id",
+    "channel",
+    "synthetic_record",
+    "anomaly_label"
+  ],
+  "required": [
+    "purchase_id",
+    "customer_id",
+    "product_id",
+    "purchase_ts",
+    "ingest_ts",
+    "quantity",
+    "unit_price",
+    "store_id",
+    "channel",
+    "synthetic_record",
+    "anomaly_label"
+  ],
+  "properties": {
+    "purchase_id": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "product_id": {
+      "type": "string"
+    },
+    "purchase_ts": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ingest_ts": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "unit_price": {
+      "type": "number"
+    },
+    "store_id": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string"
+    },
+    "synthetic_record": {
+      "type": "string",
+      "const": "SYNTHETIC"
+    },
+    "anomaly_label": {
+      "type": "string"
+    }
+  }
+}

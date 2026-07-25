@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CCHS characteristic row schema",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "characteristic_key",
+    "characteristic_name",
+    "source_characteristic_name",
+    "measure_family",
+    "statistic_type",
+    "unit",
+    "decimals",
+    "is_primary_estimate",
+    "sort_order"
+  ],
+  "required": [
+    "characteristic_key",
+    "characteristic_name",
+    "source_characteristic_name",
+    "measure_family",
+    "statistic_type",
+    "unit",
+    "decimals",
+    "is_primary_estimate",
+    "sort_order"
+  ],
+  "properties": {
+    "characteristic_key": { "type": "integer", "minimum": 1 },
+    "characteristic_name": { "type": "string" },
+    "source_characteristic_name": { "type": "string" },
+    "measure_family": { "type": "string" },
+    "statistic_type": { "type": "string" },
+    "unit": { "type": "string" },
+    "decimals": { "type": "integer", "minimum": 0 },
+    "is_primary_estimate": { "type": "boolean" },
+    "sort_order": { "type": "integer", "minimum": 1 }
+  }
+}

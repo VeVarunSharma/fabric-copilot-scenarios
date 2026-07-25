@@ -1,0 +1,52 @@
+table 'Age Group'
+	description: Published age scopes and age bands retained from the historical aggregate CCHS table.
+
+	column 'Age Group Key'
+		dataType: int64
+		sourceColumn: age_group_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Age Group Name'
+		dataType: string
+		sourceColumn: age_group_name
+		summarizeBy: none
+		sortByColumn: 'Age Group Sort Order'
+		description: Published age group. Use the total scope that matches the selected indicator.
+
+	column 'Age Group Type'
+		dataType: string
+		sourceColumn: age_group_type
+		summarizeBy: none
+		description: Distinguishes total population scopes from individual age bands.
+
+	column 'Age Group Sort Order'
+		dataType: int64
+		sourceColumn: sort_order
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	partition 'Age Group' = m
+		mode: import
+		source =
+				let
+					DataRoot = Text.TrimEnd(#"CCHS Data Root", {"/", "\"}),
+					Source = Csv.Document(
+						File.Contents(DataRoot & "/age-groups.csv"),
+						[Delimiter = ",", Columns = 4, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+					),
+					Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(
+						Headers,
+						{
+							{"age_group_key", Int64.Type},
+							{"age_group_name", type text},
+							{"age_group_type", type text},
+							{"sort_order", Int64.Type}
+						},
+						"en-CA"
+					)
+				in
+					Typed

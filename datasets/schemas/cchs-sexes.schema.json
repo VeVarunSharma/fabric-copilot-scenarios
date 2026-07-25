@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CCHS sex row schema",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "sex_key",
+    "sex_name",
+    "sort_order"
+  ],
+  "required": [
+    "sex_key",
+    "sex_name",
+    "sort_order"
+  ],
+  "properties": {
+    "sex_key": { "type": "integer", "minimum": 1 },
+    "sex_name": { "type": "string" },
+    "sort_order": { "type": "integer", "minimum": 1 }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "replacementContract",
+  "position": {
+    "x": 856,
+    "y": 506,
+    "z": 10000,
+    "height": 190,
+    "width": 400,
+    "tabOrder": 10000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Future customer data-product replacement",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "12pt",
+                      "color": "#17324D"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The semantic model reads a versioned eight-file star contract through the CCHS Data Root parameter. A finalized customer extract can replace the public snapshot by mapping to the same keys, grain, units, and quality statuses.\n\nThe practitioner still owns source approval, licence review, privacy classification, indicator definitions, comparability decisions, and acceptance testing. This demo uses neutral styling and does not imply BC Government endorsement.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "8.5pt",
+                      "color": "#37474F"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Description of the versioned replacement contract, practitioner responsibilities, neutral styling, and no implied BC Government endorsement.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

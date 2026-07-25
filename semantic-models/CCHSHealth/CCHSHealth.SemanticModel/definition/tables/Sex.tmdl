@@ -1,0 +1,45 @@
+table Sex
+	description: Published sex breakdowns from the aggregate historical CCHS table. The source provides Both sexes, Females, and Males.
+
+	column 'Sex Key'
+		dataType: int64
+		sourceColumn: sex_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Sex Name'
+		dataType: string
+		sourceColumn: sex_name
+		summarizeBy: none
+		sortByColumn: 'Sex Sort Order'
+		description: Published aggregate sex category. Do not infer respondent-level identity.
+
+	column 'Sex Sort Order'
+		dataType: int64
+		sourceColumn: sort_order
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	partition Sex = m
+		mode: import
+		source =
+				let
+					DataRoot = Text.TrimEnd(#"CCHS Data Root", {"/", "\"}),
+					Source = Csv.Document(
+						File.Contents(DataRoot & "/sexes.csv"),
+						[Delimiter = ",", Columns = 3, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+					),
+					Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(
+						Headers,
+						{
+							{"sex_key", Int64.Type},
+							{"sex_name", type text},
+							{"sort_order", Int64.Type}
+						},
+						"en-CA"
+					)
+				in
+					Typed

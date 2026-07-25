@@ -1,0 +1,354 @@
+{
+  "scenario": "07-documentation-generation",
+  "title": "Retail purchases documentation generation",
+  "draft_notice": "Generated draft. Human approval required before publication.",
+  "domain": "synthetic retail purchases medallion flow",
+  "artifacts": {
+    "source_files": [
+      {
+        "name": "purchases.csv",
+        "path": "datasets/synthetic/retail-purchases/purchases.csv",
+        "grain": "One row per synthetic retail purchase event.",
+        "columns": [
+          {
+            "name": "purchase_id",
+            "type": "string",
+            "description": "Stable synthetic purchase identifier."
+          },
+          {
+            "name": "customer_id",
+            "type": "string",
+            "description": "Synthetic customer identifier used for joins."
+          },
+          {
+            "name": "product_id",
+            "type": "string",
+            "description": "Synthetic product identifier used for joins."
+          },
+          {
+            "name": "purchase_ts",
+            "type": "datetime",
+            "description": "UTC purchase timestamp."
+          },
+          {
+            "name": "ingest_ts",
+            "type": "datetime",
+            "description": "UTC timestamp when the record is available for ingestion."
+          },
+          {
+            "name": "quantity",
+            "type": "integer",
+            "description": "Purchased unit count."
+          },
+          {
+            "name": "unit_price",
+            "type": "number",
+            "description": "Synthetic selling price per unit."
+          },
+          {
+            "name": "store_id",
+            "type": "string",
+            "description": "Store identifier carried into the Sales table."
+          },
+          {
+            "name": "channel",
+            "type": "string",
+            "description": "Retail sales channel such as store, online, or pickup."
+          },
+          {
+            "name": "synthetic_record",
+            "type": "string",
+            "description": "Safety marker with the constant value SYNTHETIC."
+          },
+          {
+            "name": "anomaly_label",
+            "type": "string",
+            "description": "Injected quality label used by the scenario notebooks."
+          }
+        ]
+      },
+      {
+        "name": "customers.csv",
+        "path": "datasets/synthetic/retail-purchases/customers.csv",
+        "grain": "One row per synthetic retail customer.",
+        "columns": [
+          {
+            "name": "customer_id",
+            "type": "string",
+            "description": "Stable synthetic customer identifier."
+          },
+          {
+            "name": "customer_name",
+            "type": "string",
+            "description": "Fictional customer display name."
+          },
+          {
+            "name": "loyalty_tier",
+            "type": "string",
+            "description": "Retail loyalty segmentation attribute."
+          },
+          {
+            "name": "home_region",
+            "type": "string",
+            "description": "Synthetic home region for the customer."
+          },
+          {
+            "name": "signup_date",
+            "type": "date",
+            "description": "Date the synthetic customer joined."
+          },
+          {
+            "name": "email_domain",
+            "type": "string",
+            "description": "Safe demo-only email domain."
+          },
+          {
+            "name": "synthetic_record",
+            "type": "string",
+            "description": "Safety marker with the constant value SYNTHETIC."
+          }
+        ]
+      },
+      {
+        "name": "products.csv",
+        "path": "datasets/synthetic/retail-purchases/products.csv",
+        "grain": "One row per synthetic retail product.",
+        "columns": [
+          {
+            "name": "product_id",
+            "type": "string",
+            "description": "Stable synthetic product identifier."
+          },
+          {
+            "name": "product_name",
+            "type": "string",
+            "description": "Fictional product display name."
+          },
+          {
+            "name": "category",
+            "type": "string",
+            "description": "Top-level retail category."
+          },
+          {
+            "name": "subcategory",
+            "type": "string",
+            "description": "Retail subcategory."
+          },
+          {
+            "name": "unit_cost",
+            "type": "number",
+            "description": "Synthetic cost per unit."
+          },
+          {
+            "name": "unit_price",
+            "type": "number",
+            "description": "Synthetic selling price per unit."
+          },
+          {
+            "name": "is_active",
+            "type": "string",
+            "description": "String flag converted to a boolean in Silver."
+          },
+          {
+            "name": "synthetic_record",
+            "type": "string",
+            "description": "Safety marker with the constant value SYNTHETIC."
+          }
+        ]
+      }
+    ],
+    "pipeline": {
+      "name": "retail-medallion.DataPipeline",
+      "path": "pipelines/retail-medallion.DataPipeline/pipeline-content.json",
+      "execution_pattern": "No schedule is committed in source control; workspace orchestration supplies invocation.",
+      "parameters": [
+        "environment",
+        "processing_date",
+        "pipeline_run_id"
+      ],
+      "activities": [
+        "Run Bronze Ingestion",
+        "Run Silver Transform",
+        "Run Gold Aggregations",
+        "Bronze Failure",
+        "Silver Failure",
+        "Gold Failure",
+        "Mark Pipeline Success"
+      ]
+    },
+    "notebooks": [
+      {
+        "name": "01_bronze_ingestion",
+        "path": "notebooks/retail-medallion/01_bronze_ingestion.ipynb",
+        "purpose": "Reads purchases.csv, customers.csv, and products.csv from the retail-purchases landing area and writes Bronze raw tables plus audit metadata."
+      },
+      {
+        "name": "02_silver_transform",
+        "path": "notebooks/retail-medallion/02_silver_transform.ipynb",
+        "purpose": "Deduplicates purchases, applies anomaly handling, joins customer and product context, and writes Silver tables plus quarantine output."
+      },
+      {
+        "name": "03_gold_aggregations",
+        "path": "notebooks/retail-medallion/03_gold_aggregations.ipynb",
+        "purpose": "Publishes Gold Date, Customer, Product, Sales, and sales_monthly_summary tables for Direct Lake consumption."
+      }
+    ],
+    "tables": [
+      {
+        "name": "bronze.retail_purchases_raw",
+        "purpose": "Raw purchase landing table with ingestion metadata.",
+        "key_columns": [
+          "purchase_id"
+        ],
+        "quality_rules": [
+          "Required purchase fields exist",
+          "source_file is populated"
+        ]
+      },
+      {
+        "name": "bronze.retail_customers_raw",
+        "purpose": "Raw customer lookup landing table.",
+        "key_columns": [
+          "customer_id"
+        ],
+        "quality_rules": [
+          "Required customer fields exist"
+        ]
+      },
+      {
+        "name": "bronze.retail_products_raw",
+        "purpose": "Raw product lookup landing table.",
+        "key_columns": [
+          "product_id"
+        ],
+        "quality_rules": [
+          "Required product fields exist"
+        ]
+      },
+      {
+        "name": "silver.retail_customers",
+        "purpose": "Conformed retail customer dimension feed.",
+        "key_columns": [
+          "customer_key",
+          "customer_id"
+        ],
+        "quality_rules": [
+          "Latest row per customer_id",
+          "customer_key is populated"
+        ]
+      },
+      {
+        "name": "silver.retail_products",
+        "purpose": "Conformed retail product dimension feed.",
+        "key_columns": [
+          "product_key",
+          "product_id"
+        ],
+        "quality_rules": [
+          "Latest row per product_id",
+          "product_key is populated"
+        ]
+      },
+      {
+        "name": "silver.retail_sales_enriched",
+        "purpose": "Purchase-level Silver sales table with calculated revenue, cost, and gross margin.",
+        "key_columns": [
+          "sales_key",
+          "purchase_id"
+        ],
+        "quality_rules": [
+          "Duplicate purchases removed",
+          "customer_key and product_key are present for valid rows"
+        ]
+      },
+      {
+        "name": "silver.retail_purchases_quarantine",
+        "purpose": "Quarantined purchase rows from deduplication, anomaly, and referential checks.",
+        "key_columns": [
+          "purchase_id"
+        ],
+        "quality_rules": [
+          "quarantine_reason is populated"
+        ]
+      },
+      {
+        "name": "gold.Date",
+        "purpose": "Calendar dimension published from retail purchase dates.",
+        "key_columns": [
+          "date_key",
+          "date_value"
+        ],
+        "quality_rules": [
+          "date_key is unique",
+          "year_month is populated"
+        ]
+      },
+      {
+        "name": "gold.Customer",
+        "purpose": "Customer dimension used by the RetailSales semantic model.",
+        "key_columns": [
+          "customer_key",
+          "customer_id"
+        ],
+        "quality_rules": [
+          "customer_key is unique"
+        ]
+      },
+      {
+        "name": "gold.Product",
+        "purpose": "Product dimension used by the RetailSales semantic model.",
+        "key_columns": [
+          "product_key",
+          "product_id"
+        ],
+        "quality_rules": [
+          "product_key is unique"
+        ]
+      },
+      {
+        "name": "gold.Sales",
+        "purpose": "Curated Sales fact table consumed directly by the semantic model.",
+        "key_columns": [
+          "sales_key"
+        ],
+        "quality_rules": [
+          "date_key is populated",
+          "revenue and cost reconcile to Silver calculations"
+        ]
+      },
+      {
+        "name": "gold.sales_monthly_summary",
+        "purpose": "Monthly by-channel summary table produced alongside the semantic-model sources.",
+        "key_columns": [
+          "year_month",
+          "channel"
+        ],
+        "quality_rules": [
+          "gross_margin_pct is populated when total_revenue is nonzero"
+        ]
+      }
+    ],
+    "semantic_model": {
+      "name": "RetailSales",
+      "path": "semantic-models/RetailSales/",
+      "consumes": [
+        "gold.Date",
+        "gold.Customer",
+        "gold.Product",
+        "gold.Sales"
+      ],
+      "report": "semantic-models/RetailSales/RetailSales.Report/"
+    },
+    "operating_model": {
+      "owners": {
+        "data_engineering": "Fabric Data Engineering Team",
+        "analytics": "Retail Analytics Team",
+        "operations": "Platform Operations"
+      },
+      "notes": [
+        "The committed pipeline definition contains explicit failure activities for Bronze, Silver, and Gold stages.",
+        "The semantic model consumes four Gold tables only; gold.sales_monthly_summary is a supplemental analytics artifact."
+      ]
+    }
+  }
+}

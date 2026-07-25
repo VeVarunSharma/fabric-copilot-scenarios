@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/semanticModel/copilot/examplePrompts/1.0.0/schema.json",
+  "prompts": [
+    "Compare British Columbia with Canada excluding territories for perceived health in 2022.",
+    "Rank British Columbia among provinces for current smoking in 2022 and show how many provinces have valid estimates.",
+    "Show historical British Columbia and Canada excluding territories trends, and identify the 2022 comparability break.",
+    "Summarize estimates marked use with caution or suppressed by indicator."
+  ]
+}

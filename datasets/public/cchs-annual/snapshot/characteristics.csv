@@ -1,0 +1,7 @@
+characteristic_key,characteristic_name,source_characteristic_name,measure_family,statistic_type,unit,decimals,is_primary_estimate,sort_order
+1,Population Estimate,Number of persons,Population,Estimate,Persons,0,true,1
+2,Population Lower 95% CI,"Low 95% confidence interval, number of persons",Population,Lower 95% CI,Persons,0,false,2
+3,Population Upper 95% CI,"High 95% confidence interval, number of persons",Population,Upper 95% CI,Persons,0,false,3
+4,Percent Estimate,Percent,Percent,Estimate,Percent,1,true,4
+5,Percent Lower 95% CI,"Low 95% confidence interval, percent",Percent,Lower 95% CI,Percent,1,false,5
+6,Percent Upper 95% CI,"High 95% confidence interval, percent",Percent,Upper 95% CI,Percent,1,false,6

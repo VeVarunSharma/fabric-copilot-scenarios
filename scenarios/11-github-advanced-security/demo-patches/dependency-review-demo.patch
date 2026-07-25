@@ -1,0 +1,14 @@
+WORKSHOP-ONLY PATCH
+Before the workshop, replace CURRENTLY_VULNERABLE_PACKAGE and CURRENTLY_VULNERABLE_VERSION with a package and version that is actively listed in the GitHub Advisory Database on the day of the demo.
+Do not commit the edited manifest to the default branch.
+
+diff --git a/requirements-workshop.txt b/requirements-workshop.txt
+new file mode 100644
+index 0000000..3333333
+--- /dev/null
++++ b/requirements-workshop.txt
+@@ -0,0 +1,4 @@
++# Workshop-only manifest for dependency review.
++# Facilitator action required: choose a currently vulnerable advisory at demo time.
++# Remove the file or discard the branch after the exercise.
++CURRENTLY_VULNERABLE_PACKAGE==CURRENTLY_VULNERABLE_VERSION

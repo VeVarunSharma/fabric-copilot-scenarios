@@ -1,0 +1,80 @@
+table 'Quality Status'
+	description: Statistics Canada quality and availability symbols retained by the curated public-data contract. Suppressed and unavailable values remain blank.
+
+	column 'Quality Status Key'
+		dataType: int64
+		sourceColumn: quality_status_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Source Status'
+		dataType: string
+		sourceColumn: source_status
+		summarizeBy: none
+		description: Original Statistics Canada symbol, including E, F, x, and two dots.
+
+	column 'Status Label'
+		dataType: string
+		sourceColumn: status_label
+		summarizeBy: none
+		sortByColumn: 'Quality Sort Order'
+		description: Plain-language interpretation of the source quality symbol.
+
+	column 'Status Description'
+		dataType: string
+		sourceColumn: status_description
+		summarizeBy: none
+		description: Full interpretation note for the source quality symbol.
+
+	column 'Is Usable'
+		dataType: boolean
+		sourceColumn: is_usable
+		summarizeBy: none
+		description: True for publishable estimates and estimates marked E for use with caution.
+
+	column 'Is Caution'
+		dataType: boolean
+		sourceColumn: is_caution
+		summarizeBy: none
+		description: True only for estimates marked E by Statistics Canada.
+
+	column 'Is Suppressed'
+		dataType: boolean
+		sourceColumn: is_suppressed
+		summarizeBy: none
+		description: True for F and x rows whose estimate is intentionally blank.
+
+	column 'Quality Sort Order'
+		dataType: int64
+		sourceColumn: sort_order
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	partition 'Quality Status' = m
+		mode: import
+		source =
+				let
+					DataRoot = Text.TrimEnd(#"CCHS Data Root", {"/", "\"}),
+					Source = Csv.Document(
+						File.Contents(DataRoot & "/quality-statuses.csv"),
+						[Delimiter = ",", Columns = 8, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+					),
+					Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(
+						Headers,
+						{
+							{"quality_status_key", Int64.Type},
+							{"source_status", type text},
+							{"status_label", type text},
+							{"status_description", type text},
+							{"is_usable", type logical},
+							{"is_caution", type logical},
+							{"is_suppressed", type logical},
+							{"sort_order", Int64.Type}
+						},
+						"en-CA"
+					)
+				in
+					Typed

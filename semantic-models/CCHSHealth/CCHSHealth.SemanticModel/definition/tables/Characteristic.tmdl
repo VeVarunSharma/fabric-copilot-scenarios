@@ -1,0 +1,89 @@
+table Characteristic
+	description: Estimate and 95 percent confidence interval characteristics for published population counts and percentages.
+
+	column 'Characteristic Key'
+		dataType: int64
+		sourceColumn: characteristic_key
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	column 'Characteristic Name'
+		dataType: string
+		sourceColumn: characteristic_name
+		summarizeBy: none
+		sortByColumn: 'Characteristic Sort Order'
+		description: Business-friendly estimate or confidence interval label.
+
+	column 'Source Characteristic Name'
+		dataType: string
+		sourceColumn: source_characteristic_name
+		summarizeBy: none
+		description: Full Statistics Canada characteristic label retained for lineage.
+
+	column 'Measure Family'
+		dataType: string
+		sourceColumn: measure_family
+		summarizeBy: none
+		description: Distinguishes published population values from percent values.
+
+	column 'Statistic Type'
+		dataType: string
+		sourceColumn: statistic_type
+		summarizeBy: none
+		description: Identifies the estimate, lower 95 percent confidence interval, or upper 95 percent confidence interval.
+
+	column Unit
+		dataType: string
+		sourceColumn: unit
+		summarizeBy: none
+		description: Persons or Percent, matching the source characteristic.
+
+	column Decimals
+		dataType: int64
+		sourceColumn: decimals
+		formatString: 0
+		summarizeBy: none
+		description: Display precision supplied by the curated data contract.
+		isHidden
+
+	column 'Is Primary Estimate'
+		dataType: boolean
+		sourceColumn: is_primary_estimate
+		summarizeBy: none
+		description: True for the population and percentage estimate characteristics, excluding confidence interval bounds.
+
+	column 'Characteristic Sort Order'
+		dataType: int64
+		sourceColumn: sort_order
+		formatString: 0
+		summarizeBy: none
+		isHidden
+
+	partition Characteristic = m
+		mode: import
+		source =
+				let
+					DataRoot = Text.TrimEnd(#"CCHS Data Root", {"/", "\"}),
+					Source = Csv.Document(
+						File.Contents(DataRoot & "/characteristics.csv"),
+						[Delimiter = ",", Columns = 9, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+					),
+					Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(
+						Headers,
+						{
+							{"characteristic_key", Int64.Type},
+							{"characteristic_name", type text},
+							{"source_characteristic_name", type text},
+							{"measure_family", type text},
+							{"statistic_type", type text},
+							{"unit", type text},
+							{"decimals", Int64.Type},
+							{"is_primary_estimate", type logical},
+							{"sort_order", Int64.Type}
+						},
+						"en-CA"
+					)
+				in
+					Typed

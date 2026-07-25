@@ -1,0 +1,97 @@
+{
+  "attribution": "Adapted from Statistics Canada, Health characteristics, annual estimates, inactive, 2015 to 2022. This does not constitute an endorsement by Statistics Canada of this product.",
+  "contractVersion": "1.0",
+  "files": {
+    "age-groups.csv": {
+      "rows": 7,
+      "sha256": "b0382e289dfad5ca53fe4a386c23ab48317b81183f2d3df48befd3a0d3cc1f77"
+    },
+    "characteristics.csv": {
+      "rows": 6,
+      "sha256": "0445fef3d2c56415eea2e07f9aec1f70c3f6f1d21e0b7d4113fb3aac0009ed82"
+    },
+    "geographies.csv": {
+      "rows": 11,
+      "sha256": "f6265b1d0b5afff00b464dd7a9efd394ecc8d44b2d29c27537fdd6f73fac784d"
+    },
+    "indicators.csv": {
+      "rows": 8,
+      "sha256": "df043b67488101c4783c4b202f9c1ff879a773a58bd8195f9b4e0a3f97e62e09"
+    },
+    "observations.csv": {
+      "rows": 76032,
+      "sha256": "101d92fab5bc445503d53d260bd4c4ce07c43a47b17edec6991e878f8bcc5b3d"
+    },
+    "periods.csv": {
+      "rows": 8,
+      "sha256": "3060a14d18c3f56254758b086159819c93036b4f6c4d25edb8b2ce14ada4e089"
+    },
+    "quality-statuses.csv": {
+      "rows": 5,
+      "sha256": "e68fdf8af544c55a2d5b9b911a6ee636188c10bf53f6c3df7cf15679038ec175"
+    },
+    "sexes.csv": {
+      "rows": 3,
+      "sha256": "f6ce1919300428f9a66f3ba3580bf1891085ef93955ca5eecf7e2e9f38a31027"
+    }
+  },
+  "licenceUrl": "https://www.statcan.gc.ca/en/terms-conditions/open-licence",
+  "notes": [
+    "This is an aggregated public-data snapshot, not respondent-level microdata.",
+    "The 2022 survey redesign limits comparison with earlier periods.",
+    "Suppressed and unavailable observations remain blank and are never zero-filled."
+  ],
+  "selection": {
+    "characteristics": [
+      "Number of persons",
+      "Low 95% confidence interval, number of persons",
+      "High 95% confidence interval, number of persons",
+      "Percent",
+      "Low 95% confidence interval, percent",
+      "High 95% confidence interval, percent"
+    ],
+    "geographies": [
+      "Canada (excluding territories)",
+      "Newfoundland and Labrador",
+      "Prince Edward Island",
+      "Nova Scotia",
+      "New Brunswick",
+      "Quebec",
+      "Ontario",
+      "Manitoba",
+      "Saskatchewan",
+      "Alberta",
+      "British Columbia"
+    ],
+    "indicators": [
+      "Perceived health, very good or excellent",
+      "Perceived mental health, very good or excellent",
+      "Perceived life stress, most days quite a bit or extremely stressful",
+      "Life satisfaction, satisfied or very satisfied",
+      "Current smoker, daily or occasional",
+      "Heavy drinking",
+      "Self-reported physical activity, 150 minutes per week, adult (18 years and over)",
+      "Has a regular healthcare provider"
+    ]
+  },
+  "snapshotDate": "2026-07-24",
+  "source": {
+    "archived": true,
+    "downloadRoot": "13100096",
+    "downloadUrl": "https://www150.statcan.gc.ca/n1/tbl/csv/13100096-eng.zip",
+    "productId": "13-10-0096-01",
+    "productUrl": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1310009601",
+    "referenceYears": [
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022
+    ],
+    "sha256": "b9e2a0ea95e7c7bd03b6740d0d4eccbb508099eb50021a6266412ce62d991c40",
+    "title": "Health characteristics, annual estimates, inactive"
+  }
+}

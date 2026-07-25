@@ -1,0 +1,28 @@
+{
+  "name": "KpiRevenue",
+  "position": {
+    "x": 32,
+    "y": 32,
+    "z": 0,
+    "width": 320,
+    "height": 140
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": {
+              "expr": {
+                "Literal": {
+                  "Value": "'RetailSales report scaffold. Open in Power BI Desktop and bind visuals to the semantic model.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

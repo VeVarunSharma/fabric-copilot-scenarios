@@ -1,0 +1,14 @@
+relationship 'Sales to Date'
+	fromColumn: Sales.DateKey
+	toColumn: Date.DateKey
+	crossFilteringBehavior: bothDirections
+
+relationship 'Sales to Customer'
+	fromColumn: Sales.CustomerKey
+	toColumn: Customer.CustomerKey
+	crossFilteringBehavior: bothDirections
+
+relationship 'Sales to Product'
+	fromColumn: Sales.ProductKey
+	toColumn: Product.ProductKey
+	crossFilteringBehavior: bothDirections

@@ -1,0 +1,9 @@
+# Template only: uncomment and replace the example owner with a real write-capable GitHub user or team
+# before enabling CODEOWNERS-based review requirements.
+#
+# * @your-org/your-team
+# .github/ @your-org/your-team
+# /CONTRIBUTING.md @your-org/your-team
+# /CODE_OF_CONDUCT.md @your-org/your-team
+# /SECURITY.md @your-org/your-team
+# /SUPPORT.md @your-org/your-team

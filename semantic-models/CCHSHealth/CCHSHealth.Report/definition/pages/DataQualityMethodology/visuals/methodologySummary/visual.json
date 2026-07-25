@@ -1,0 +1,65 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "methodologySummary",
+  "position": {
+    "x": 24,
+    "y": 506,
+    "z": 8000,
+    "height": 190,
+    "width": 390,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Methodology and scope",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "12pt",
+                      "color": "#17324D"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Source: Statistics Canada table 13-10-0096-01, Health characteristics, annual estimates, inactive.\nCoverage: 2015-2022; Canada (excluding territories) and ten provinces.\nThis archived table is historical. No current 2023-2025 CCHS claims are made.\nThe 2022 survey redesign is a comparability break; do not infer a year-over-year effect across it.\nAll values are aggregate published cells.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "8.5pt",
+                      "color": "#37474F"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Methodology summary naming the archived source table, 2015 to 2022 coverage, province scope, redesign warning, and aggregate data grain.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

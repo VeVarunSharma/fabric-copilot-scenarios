@@ -1,0 +1,21 @@
+table Customer
+
+	column CustomerKey
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: customer_key
+
+	column CustomerName
+		dataType: string
+		sourceColumn: customer_name
+
+	column LoyaltyTier
+		dataType: string
+		sourceColumn: loyalty_tier
+
+	partition Customer = entity
+		mode: directLake
+		source
+			entityName: Customer
+			schemaName: gold
+			expressionSource: DL_Lakehouse

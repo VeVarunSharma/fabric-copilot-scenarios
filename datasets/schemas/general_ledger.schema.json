@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "General ledger row schema",
+  "description": "Row shape for datasets/synthetic/financial-reporting/general_ledger.csv.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "entry_id",
+    "posting_date",
+    "account_id",
+    "cost_center",
+    "journal_source",
+    "debit_amount",
+    "credit_amount",
+    "description",
+    "synthetic_record",
+    "anomaly_label"
+  ],
+  "required": [
+    "entry_id",
+    "posting_date",
+    "account_id",
+    "cost_center",
+    "journal_source",
+    "debit_amount",
+    "credit_amount",
+    "description",
+    "synthetic_record",
+    "anomaly_label"
+  ],
+  "properties": {
+    "entry_id": {
+      "type": "string"
+    },
+    "posting_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "account_id": {
+      "type": "string"
+    },
+    "cost_center": {
+      "type": "string"
+    },
+    "journal_source": {
+      "type": "string"
+    },
+    "debit_amount": {
+      "type": "number"
+    },
+    "credit_amount": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "synthetic_record": {
+      "type": "string",
+      "const": "SYNTHETIC"
+    },
+    "anomaly_label": {
+      "type": "string"
+    }
+  }
+}

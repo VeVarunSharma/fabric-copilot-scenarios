@@ -1,0 +1,141 @@
+{
+  "scenario": "10-fabric-devops",
+  "purpose": "Document the actual workflow and config contract for multi-environment Fabric deployment.",
+  "shared_assets": {
+    "script_directory": "../../../scripts/fabric/",
+    "workflow": "../../../.github/workflows/fabric-deploy.yml",
+    "default_config_path": "scripts/fabric/config.example.json"
+  },
+  "workflow_contract": {
+    "github_environments": [
+      "dev",
+      "test",
+      "prod"
+    ],
+    "operations": [
+      "validate",
+      "plan",
+      "deploy",
+      "run",
+      "verify"
+    ],
+    "override_chains": [
+      {
+        "source": "workflow inputs.environment",
+        "cli_argument": "--environment",
+        "target": "config ENVIRONMENT",
+        "effect": "Overrides the ENVIRONMENT placeholder value for the invocation."
+      },
+      {
+        "source": "selected GitHub environment variable FABRIC_WORKSPACE_NAME",
+        "cli_argument": "--workspace-name",
+        "target": "workspace.displayName",
+        "effect": "Overrides workspace.displayName for the invocation."
+      }
+    ],
+    "source_config_role": "scripts/fabric/config.example.json remains a safe dev or local example. Runtime overrides change ENVIRONMENT and workspace.displayName separately for the selected invocation."
+  },
+  "external_prerequisites": {
+    "workspace_requirement": "A capacity-backed Fabric workspace must already exist for each environment.",
+    "workspace_examples": [
+      "Fabric Copilot Scenarios - Dev",
+      "Fabric Copilot Scenarios - Test",
+      "Fabric Copilot Scenarios - Prod"
+    ],
+    "required_existing_items": [
+      {
+        "type": "Lakehouse",
+        "display_name": "RetailLakehouse",
+        "requirement": "Must already exist and be schema-enabled."
+      }
+    ],
+    "landing_files": [
+      "Files/landing/retail-purchases",
+      "Files/landing/iot-telemetry",
+      "Files/landing/healthcare-claims"
+    ],
+    "scope_note": "Deployment creates or updates item definitions. It does not provision Fabric capacity, create RetailLakehouse, or upload fixture data."
+  },
+  "environments": [
+    {
+      "name": "dev",
+      "github_environment": "dev",
+      "workspace_display_name": "Fabric Copilot Scenarios - Dev",
+      "expected_display_names": {
+        "lakehouse": "RetailLakehouse",
+        "pipeline": "Retail Medallion Pipeline",
+        "semantic_model": "RetailSales"
+      },
+      "deployment_overrides": {
+        "environment_argument": "--environment dev",
+        "workspace_argument": "--workspace-name \"$FABRIC_WORKSPACE_NAME\"",
+        "workspace_variable_value_example": "Fabric Copilot Scenarios - Dev",
+        "dry_run_required": true
+      },
+      "approvals": {
+        "required_reviewers": [],
+        "notes": "Fastest iteration path, but still uses the same override contract as higher environments."
+      }
+    },
+    {
+      "name": "test",
+      "github_environment": "test",
+      "workspace_display_name": "Fabric Copilot Scenarios - Test",
+      "expected_display_names": {
+        "lakehouse": "RetailLakehouse",
+        "pipeline": "Retail Medallion Pipeline",
+        "semantic_model": "RetailSales"
+      },
+      "deployment_overrides": {
+        "environment_argument": "--environment test",
+        "workspace_argument": "--workspace-name \"$FABRIC_WORKSPACE_NAME\"",
+        "workspace_variable_value_example": "Fabric Copilot Scenarios - Test",
+        "dry_run_required": true
+      },
+      "approvals": {
+        "required_reviewers": [
+          "workflow or environment approvers"
+        ],
+        "notes": "Use for integration validation before production promotion."
+      }
+    },
+    {
+      "name": "prod",
+      "github_environment": "prod",
+      "workspace_display_name": "Fabric Copilot Scenarios - Prod",
+      "expected_display_names": {
+        "lakehouse": "RetailLakehouse",
+        "pipeline": "Retail Medallion Pipeline",
+        "semantic_model": "RetailSales"
+      },
+      "deployment_overrides": {
+        "environment_argument": "--environment prod",
+        "workspace_argument": "--workspace-name \"$FABRIC_WORKSPACE_NAME\"",
+        "workspace_variable_value_example": "Fabric Copilot Scenarios - Prod",
+        "dry_run_required": true
+      },
+      "approvals": {
+        "required_reviewers": [
+          "workflow or environment approvers"
+        ],
+        "notes": "Formal approvals, rollback readiness, and evidence capture should be enforced here."
+      }
+    }
+  ],
+  "validation": {
+    "required_steps": [
+      "validate the source config locally",
+      "confirm workflow inputs.environment is passed to --environment",
+      "confirm FABRIC_WORKSPACE_NAME is passed to --workspace-name",
+      "run plan before deploy",
+      "verify external workspace, lakehouse, and landing-file prerequisites",
+      "capture verify or rollback evidence after remote changes"
+    ],
+    "forbidden_patterns": [
+      "hardcoded workspace ids",
+      "hardcoded item ids",
+      "legacy GitHub environment aliases",
+      "stored client secrets in the repository"
+    ]
+  }
+}

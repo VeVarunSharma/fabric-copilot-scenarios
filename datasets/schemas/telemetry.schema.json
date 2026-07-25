@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IoT telemetry record schema",
+  "description": "Record shape for datasets/synthetic/iot-telemetry/telemetry.jsonl.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "jsonl",
+  "required": [
+    "device_id",
+    "site_id",
+    "event_time",
+    "ingest_time",
+    "temperature_c",
+    "vibration_mm_s",
+    "humidity_pct",
+    "battery_pct",
+    "status",
+    "synthetic_record",
+    "anomaly_labels"
+  ],
+  "properties": {
+    "device_id": {
+      "type": "string"
+    },
+    "site_id": {
+      "type": "string"
+    },
+    "event_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ingest_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "temperature_c": {
+      "type": "number"
+    },
+    "vibration_mm_s": {
+      "type": "number"
+    },
+    "humidity_pct": {
+      "type": "number"
+    },
+    "battery_pct": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string"
+    },
+    "synthetic_record": {
+      "type": "string",
+      "const": "SYNTHETIC"
+    },
+    "anomaly_labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

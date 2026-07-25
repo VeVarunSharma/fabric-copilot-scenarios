@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CCHS observation row schema",
+  "description": "One published aggregate estimate cell in the curated CCHS snapshot.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-fileFormat": "csv",
+  "x-columnOrder": [
+    "period_key",
+    "geography_key",
+    "age_group_key",
+    "sex_key",
+    "indicator_key",
+    "characteristic_key",
+    "quality_status_key",
+    "value"
+  ],
+  "required": [
+    "period_key",
+    "geography_key",
+    "age_group_key",
+    "sex_key",
+    "indicator_key",
+    "characteristic_key",
+    "quality_status_key",
+    "value"
+  ],
+  "properties": {
+    "period_key": { "type": "integer" },
+    "geography_key": { "type": "integer", "minimum": 1 },
+    "age_group_key": { "type": "integer", "minimum": 1 },
+    "sex_key": { "type": "integer", "minimum": 1 },
+    "indicator_key": { "type": "integer", "minimum": 1 },
+    "characteristic_key": { "type": "integer", "minimum": 1 },
+    "quality_status_key": { "type": "integer", "minimum": 1 },
+    "value": {
+      "oneOf": [
+        { "type": "number" },
+        { "type": "string", "const": "" }
+      ]
+    }
+  }
+}

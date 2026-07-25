@@ -1,0 +1,6 @@
+quality_status_key,source_status,status_label,status_description,is_usable,is_caution,is_suppressed,sort_order
+1,,Publishable,No Statistics Canada quality symbol is attached.,true,false,false,1
+2,E,Use with caution,Statistics Canada marks the estimate as use with caution.,true,true,false,2
+3,F,Too unreliable to publish,Statistics Canada considers the estimate too unreliable to publish.,false,false,true,3
+4,x,Suppressed,Statistics Canada suppresses the estimate for confidentiality.,false,false,true,4
+5,..,Not available,The estimate is not available for this reference period.,false,false,false,5
